@@ -1,5 +1,6 @@
 CFILES = $(shell find . -name '*.c')
 OFILES = $(CFILES:.c=.o)
+GCCFILESFLAGS = -ffreestanding -mgeneral-regs-only
 GCCFLAGS = -Wall -O2 -ffreestanding -nostdinc -nostdlib -nostartfiles
 ARMGNU ?= aarch64-none-elf
 
@@ -9,10 +10,10 @@ boot.o: boot.S
 	$(ARMGNU)-gcc $(GCCFLAGS) -c boot.S -o boot.o
 
 src/os/lib.o: src/os/lib.s
-	$(ARMGNU)-gcc $(GCCFLAGS) -c src/os/lib.S -o src/os/lib.o
+	$(ARMGNU)-gcc $(GCCFILESFLAGS) -c src/os/lib.S -o src/os/lib.o
 
 %.o: %.c
-	$(ARMGNU)-gcc $(GCCFLAGS) -c $< -o $@
+	$(ARMGNU)-gcc $(GCCFILESFLAGS) -c $< -o $@
 
 kernel8.img: boot.o src/os/lib.o $(OFILES)
 	$(ARMGNU)-ld -nostdlib boot.o src/os/lib.o $(OFILES) -T link.ld -o build/kernel8.elf

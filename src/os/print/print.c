@@ -1,5 +1,5 @@
-// #include "stdint.h"
-// #include "stdarg.h"
+#include "stdint.h"
+#include "stdarg.h"
 #include "../lib.h"
 #include "../uart/uart.h"
 
@@ -79,9 +79,9 @@ int printk(const char *format, ...)
     int buffer_size = 0;
     int64_t integer = 0;
     char *string = 0;
-    // va_list args;
+    va_list args;
 
-    // va_start(args, format);
+    va_start(args, format);
 
     for (int i = 0; format[i] != '\0'; i++) {
         if (format[i] != '%') {
@@ -89,25 +89,25 @@ int printk(const char *format, ...)
         }
         else {
             switch (format[++i]) {
-                // case 'x':
-                //     integer = va_arg(args, int64_t);
-                //     buffer_size += hex_to_string(buffer, buffer_size, (uint64_t)integer);
-                //     break;
+                case 'x':
+                    integer = va_arg(args, int64_t);
+                    buffer_size += hex_to_string(buffer, buffer_size, (uint64_t)integer);
+                    break;
 
-                // case 'u':
-                //     integer = va_arg(args, int64_t);
-                //     buffer_size += udecimal_to_string(buffer, buffer_size, (uint64_t)integer);
-                //     break;
+                case 'u':
+                    integer = va_arg(args, int64_t);
+                    buffer_size += udecimal_to_string(buffer, buffer_size, (uint64_t)integer);
+                    break;
 
-                // case 'd':
-                //     integer = va_arg(args, int64_t);
-                //     buffer_size += decimal_to_string(buffer, buffer_size, integer);
-                //     break;
+                case 'd':
+                    integer = va_arg(args, int64_t);
+                    buffer_size += decimal_to_string(buffer, buffer_size, integer);
+                    break;
 
-                // case 's':
-                //     string = va_arg(args, char*);
-                //     buffer_size += read_string(buffer, buffer_size, string);
-                //     break;
+                case 's':
+                    string = va_arg(args, char*);
+                    buffer_size += read_string(buffer, buffer_size, string);
+                    break;
 
                 default:
                     buffer[buffer_size++] = '%';
@@ -117,7 +117,7 @@ int printk(const char *format, ...)
     }
 
     write_console(buffer, buffer_size);
-    // va_end(args);
+    va_end(args);
 
     return buffer_size;
 }

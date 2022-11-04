@@ -8,7 +8,7 @@
 .global get_el
 
 get_el:
-    mrs x0, currentel
+    mrs x0, CurrentEL // current exception level
     lsr x0, x0, #2
     ret
 

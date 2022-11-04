@@ -3,6 +3,7 @@
 		"*.s": "arm",
 		"stdarg.h": "c",
 		"lib.h": "c",
-		"uart.h": "c"
+		"uart.h": "c",
+		"stdint.h": "c"
 	}
 }
