@@ -1,7 +1,6 @@
 CFILES = $(wildcard *.c)
 OFILES = $(CFILES:.c=.o)
 GCCFLAGS = -Wall -O2 -ffreestanding -nostdinc -nostdlib -nostartfiles
-GCCPATH = ../../gcc-arm-10.3-2021.07-x86_64-aarch64-none-elf/bin
 ARMGNU ?= aarch64-none-elf
 
 all: clean kernel8.img
