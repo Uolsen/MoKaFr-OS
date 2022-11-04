@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"*.s": "arm",
+		"stdarg.h": "c",
+		"lib.h": "c",
+		"uart.h": "c"
+	}
+}
