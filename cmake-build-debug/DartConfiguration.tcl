@@ -4,14 +4,14 @@
 
 
 # Configuration directories and files
-SourceDirectory: /Users/stepanmocjak/Development/University/OS/SP
-BuildDirectory: /Users/stepanmocjak/Development/University/OS/SP/cmake-build-debug
+SourceDirectory: /Users/lukasfrey/Development/ZCU/OS/MoKaFr-OS
+BuildDirectory: /Users/lukasfrey/Development/ZCU/OS/MoKaFr-OS/cmake-build-debug
 
 # Where to place the cost data store
 CostDataFile: 
 
 # Site is something like machine.domain, i.e. pragmatic.crd
-Site: Stepan-MacBook-Pro.local
+Site: Lukass-MacBook-Pro.local
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
 BuildName: Darwin-c++
@@ -27,8 +27,8 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/Users/stepanmocjak/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/CLion.app/Contents/bin/cmake/mac/bin/cmake" "/Users/stepanmocjak/Development/University/OS/SP"
-MakeCommand: /Users/stepanmocjak/Library/Application\ Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/CLion.app/Contents/bin/cmake/mac/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
+ConfigureCommand: "/Users/lukasfrey/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/CLion.app/Contents/bin/cmake/mac/bin/cmake" "/Users/lukasfrey/Development/ZCU/OS/MoKaFr-OS"
+MakeCommand: /Users/lukasfrey/Library/Application\ Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/CLion.app/Contents/bin/cmake/mac/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}" -- -i
 DefaultCTestConfigurationType: Release
 
 # version control
@@ -45,7 +45,7 @@ SVNOptions:
 SVNUpdateOptions: 
 
 # Git options
-GITCommand: /usr/local/bin/git
+GITCommand: /usr/bin/git
 GITInitSubmodules: 
 GITUpdateOptions: 
 GITUpdateCustom: 
@@ -58,7 +58,7 @@ P4UpdateOptions:
 P4UpdateCustom: 
 
 # Generic update command
-UpdateCommand: /usr/local/bin/git
+UpdateCommand: /usr/bin/git
 UpdateOptions: 
 UpdateType: git
 

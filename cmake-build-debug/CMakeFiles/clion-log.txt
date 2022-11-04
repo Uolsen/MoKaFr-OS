@@ -1,4 +1,4 @@
-"/Users/stepanmocjak/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=/Users/stepanmocjak/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4167.35/CLion.app/Contents/bin/ninja/mac/ninja" -G Ninja -S /Users/stepanmocjak/Development/University/OS/SP -B /Users/stepanmocjak/Development/University/OS/SP/cmake-build-debug
+"/Users/lukasfrey/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/222.4345.21/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /Users/lukasfrey/Development/ZCU/OS/MoKaFr-OS -B /Users/lukasfrey/Development/ZCU/OS/MoKaFr-OS/cmake-build-debug
 -- The C compiler identification is AppleClang 14.0.0.14000029
 -- The CXX compiler identification is AppleClang 14.0.0.14000029
 -- Detecting C compiler ABI info
@@ -13,4 +13,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/stepanmocjak/Development/University/OS/SP/cmake-build-debug
+-- Build files have been written to: /Users/lukasfrey/Development/ZCU/OS/MoKaFr-OS/cmake-build-debug
