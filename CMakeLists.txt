@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(Mokafr VERSION 0.1.0)
+project(Mokafr CXX C ASM)
 
-include(CTest)
-enable_testing()
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set( CMAKE_SYSTEM_NAME          Generic )
+set( CMAKE_SYSTEM_PROCESSOR     BCM2835 )
+
+# include(CTest)
+# enable_testing()
 
 add_executable(Mokafr main.cpp)
 
