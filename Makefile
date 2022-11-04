@@ -13,8 +13,8 @@ boot.o: boot.S
 	$(ARMGNU)-gcc $(GCCFLAGS) -c $< -o $@
 
 kernel8.img: boot.o $(OFILES)
-	$(ARMGNU)-ld -nostdlib boot.o $(OFILES) -T link.ld -o kernel8.elf
-	$(ARMGNU)-objcopy -O binary kernel8.elf kernel8.img
+	$(ARMGNU)-ld -nostdlib boot.o $(OFILES) -T link.ld -o build/kernel8.elf
+	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
 
 clean:
-	/bin/rm kernel8.elf *.o *.img > /dev/null 2> /dev/null || true
+	/bin/rm build/kernel8.elf *.o build/*.img > /dev/null 2> /dev/null || true
