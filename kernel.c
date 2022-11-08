@@ -1,14 +1,16 @@
-#include "src/os/uart/uart.h"
-#include "src/os/print/print.h"
+#include "uart/uart.h"
+#include "print/print.h"
 // #include "debug.h"
-#include "src/os/lib.h"
+#include "lib.h"
 // #include "handler.h"
 
 void main()
 {
     init_uart();
-    printk("Hello, Raspberry pi\r\n");
-    printk("We are at EL %u\r\n", (uint64_t)get_el());
+
+    print("Hello, Raspberry pi\r\n");
+    int64_t params2[] = {(uint64_t)get_el()};
+    printk("We are at EL %u\r\n", params2);
     // char buffer[1024];
     // int buffer_size = 0;
     // decimal_to_string(buffer, 0, (uint64_t)get_el());

@@ -16,14 +16,16 @@
         {
             "name": "aarch64",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/src/hal"
             ],
             "defines": [],
             "macFrameworkPath": [],
             "compilerPath": "/usr/local/bin/aarch64-none-elf-gcc",
             "cStandard": "gnu17",
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "macos-gcc-arm"
+            "intelliSenseMode": "macos-gcc-arm",
+            "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],
     "version": 4

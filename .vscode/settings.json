@@ -4,6 +4,7 @@
 		"stdarg.h": "c",
 		"lib.h": "c",
 		"uart.h": "c",
-		"stdint.h": "c"
+		"stdint.h": "c",
+		"cstdint": "cpp"
 	}
 }

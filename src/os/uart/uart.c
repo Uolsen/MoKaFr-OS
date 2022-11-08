@@ -1,5 +1,5 @@
-#include "uart.h"
-#include "../lib.h"
+#include "uart/uart.h"
+#include "lib.h"
 
 void write_char(unsigned char c)
 {
