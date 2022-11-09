@@ -3,6 +3,8 @@
 // #include "debug.h"
 #include "lib.h"
 // #include "handler.h"
+#include "timer/system_timer.h"
+#include "timer/arm_timer.h"
 
 void main()
 {
@@ -11,6 +13,17 @@ void main()
     print("Hello, Raspberry pi\r\n");
     int64_t params2[] = {(uint64_t)get_el()};
     printk("We are at EL %u\r\n", params2);
+
+    arm_timer_init();
+
+    // // system_timer_init();
+    // for (uint32_t i = 0; i < 100000; i++)
+    // {
+            
+    // }
+    
+    // system_timer_init();
+
     // char buffer[1024];
     // int buffer_size = 0;
     // decimal_to_string(buffer, 0, (uint64_t)get_el());

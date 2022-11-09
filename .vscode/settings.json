@@ -5,6 +5,10 @@
 		"lib.h": "c",
 		"uart.h": "c",
 		"stdint.h": "c",
-		"cstdint": "cpp"
-	}
+		"cstdint": "cpp",
+		"system_timer.h": "c",
+		"print.h": "c"
+	},
+	"C_Cpp.errorSquiggles": "Enabled",
+	"C_Cpp.intelliSenseEngineFallback": "Disabled"
 }

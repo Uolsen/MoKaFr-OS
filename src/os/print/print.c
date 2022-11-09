@@ -5,7 +5,8 @@ static int read_string(char *buffer, int position, const char *string)
 {
     int index = 0;
 
-    for (index = 0; string[index] != '\0'; index++) {
+    for (index = 0; string[index] != '\0'; index++)
+    {
         buffer[position++] = string[index];
     }
 
@@ -17,13 +18,15 @@ static int hex_to_string(char *buffer, int position, uint64_t digits)
     char digits_buffer[25];
     char digits_map[16] = "0123456789ABCDEF";
     int size = 0;
-    
-    do {
+
+    do
+    {
         digits_buffer[size++] = digits_map[digits % 16];
         digits /= 16;
     } while (digits != 0);
 
-    for (int i = size-1; i >= 0; i--) {
+    for (int i = size - 1; i >= 0; i--)
+    {
         buffer[position++] = digits_buffer[i];
     }
 
@@ -38,12 +41,14 @@ static int udecimal_to_string(char *buffer, int position, uint64_t digits)
     char digits_buffer[25];
     int size = 0;
 
-    do {
+    do
+    {
         digits_buffer[size++] = digits_map[digits % 10];
         digits /= 10;
     } while (digits != 0);
 
-    for (int i = size-1; i >= 0; i--) {
+    for (int i = size - 1; i >= 0; i--)
+    {
         buffer[position++] = digits_buffer[i];
     }
 
@@ -54,7 +59,8 @@ static int decimal_to_string(char *buffer, int position, int64_t digits)
 {
     int size = 0;
 
-    if (digits < 0) {
+    if (digits < 0)
+    {
         digits = -digits;
         buffer[position++] = '-';
         size = 1;
@@ -66,7 +72,8 @@ static int decimal_to_string(char *buffer, int position, int64_t digits)
 
 static void write_console(const char *buffer, int size)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
         write_char(buffer[i]);
     }
 }
@@ -82,35 +89,39 @@ int printk(const char *format, int64_t data[])
     // va_start(args, format);
     uint16_t count = 0;
 
-    for (int i = 0; format[i] != '\0'; i++) {
-        if (format[i] != '%') {
+    for (int i = 0; format[i] != '\0'; i++)
+    {
+        if (format[i] != '%')
+        {
             buffer[buffer_size++] = format[i];
         }
-        else {
-            switch (format[++i]) {
-                case 'x':
-                    integer = (uint64_t) data[count];
-                    buffer_size += hex_to_string(buffer, buffer_size, (uint64_t)integer);
-                    break;
+        else
+        {
+            switch (format[++i])
+            {
+            case 'x':
+                integer = (uint64_t)data[count];
+                buffer_size += hex_to_string(buffer, buffer_size, (uint64_t)integer);
+                break;
 
-                case 'u':
-                    integer = (uint64_t) data[count];
-                    buffer_size += udecimal_to_string(buffer, buffer_size, (uint64_t)integer);
-                    break;
+            case 'u':
+                integer = (uint64_t)data[count];
+                buffer_size += udecimal_to_string(buffer, buffer_size, (uint64_t)integer);
+                break;
 
-                case 'd':
-                    integer = (uint64_t) &data[count];
-                    buffer_size += decimal_to_string(buffer, buffer_size, integer);
-                    break;
+            case 'd':
+                integer = (uint64_t)&data[count];
+                buffer_size += decimal_to_string(buffer, buffer_size, integer);
+                break;
 
-                case 's':
-                    string = (char*) data[count];
-                    buffer_size += read_string(buffer, buffer_size, string);
-                    break;
+            case 's':
+                string = (char *)data[count];
+                buffer_size += read_string(buffer, buffer_size, string);
+                break;
 
-                default:
-                    buffer[buffer_size++] = '%';
-                    i--;
+            default:
+                buffer[buffer_size++] = '%';
+                i--;
             }
             count += 1;
         }
@@ -122,7 +133,8 @@ int printk(const char *format, int64_t data[])
     return buffer_size;
 }
 
-int print(const char *format){
-    int64_t data[] = {};
-    printk(format, data);
+int print(const char *format)
+{
+    int64_t data[] = {-1};
+    return printk(format, data);
 }
