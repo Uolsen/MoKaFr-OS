@@ -8,9 +8,30 @@ _start:
     and     x1, x1, #3
     cbz     x1, 2f
     // We're not on the main core, so hang in an infinite wait loop
-1:  wfe
-    b       1b
+end:  
+    wfe
+    bl       end
 2:  // We're on the main core!
+
+    // Swith to EL1
+    mrs x0, CurrentEL
+    lsr x0, x0, #2              // Getting current level -> shifting by 2
+    cmp x0, #2                  // compare it with 2
+    bne end
+
+    msr sctlr_el1, xzr
+    mov x0, #(1<<31)
+    msr hcr_el2, x0
+
+    mov x0, 0b1111000101
+    msr spsr_el2, x0
+
+    adr x0, el1_entry
+    msr elr_el2, x0
+
+    eret
+
+el1_entry:
 
     // Set stack to start below our code
     ldr     x1, =_start
@@ -27,4 +48,4 @@ _start:
     // Jump to our main() routine in C (make sure it doesn't return)
 4:  bl      main
     // In case it does return, halt the master core too
-    b       1b
+    bl       end

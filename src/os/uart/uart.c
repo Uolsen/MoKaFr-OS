@@ -1,3 +1,4 @@
+#include "drivers/gpio/gpio.h"
 #include "uart/uart.h"
 #include "lib.h"
 
@@ -40,6 +41,9 @@ void uart_handler(void)
 
 void init_uart(void)
 {
+    gpio_set_function(14, Alt_0);
+    gpio_set_function(15, Alt_0);
+
     out_word(UART0_CR, 0);
     out_word(UART0_IBRD, 26);
     out_word(UART0_FBRD, 0);

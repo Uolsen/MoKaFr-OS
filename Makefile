@@ -22,5 +22,5 @@ kernel8.img: boot.o src/os/liba.o $(OFILES)
 	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
 
 clean:
-	/bin/rm build/kernel8.elf *.o build/*.img > /dev/null 2> /dev/null || true
+	/bin/rm build/kernel8.elf *.o build/*.img build/*.srec > /dev/null 2> /dev/null || true
 	find . -name '*.o' -type f -delete
