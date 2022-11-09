@@ -4,7 +4,9 @@
 uint64_t rand(uint64_t min, uint64_t max) {
     uint64_t ctrl_value = in_word(RNG_CTRL);
 
-    if (!(ctrl_value =& 1)) {           // initialize on first call
+    ctrl_value = ctrl_value & 1;
+
+    if (!(ctrl_value)) {           // initialize on first call
    //     RNG_STATUS = 0x40000;          // not sure why is this important, but linux does it this way
  //       RNG_INT_MASK |= 1;             // mask interrupt
         ctrl_value |= 1;                 // enable the generator
