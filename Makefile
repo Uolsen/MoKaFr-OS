@@ -10,14 +10,14 @@ all: clean kernel8.img
 boot.o: boot.S
 	$(ARMGNU)-gcc $(GCCFLAGS) -c boot.S -o boot.o
 
-src/os/lib.o: src/os/lib.s
-	$(ARMGNU)-gcc $(GCCFLAGS) -c src/os/lib.S -o src/os/lib.o
+src/os/liba.o: src/os/liba.s
+	$(ARMGNU)-gcc $(GCCFLAGS) -c src/os/liba.S -o src/os/liba.o
 
 %.o: %.c
 	$(ARMGNU)-gcc $(GCCFLAGS) -c $< -o $@
 
-kernel8.img: boot.o src/os/lib.o $(OFILES)
-	$(ARMGNU)-ld -nostdlib boot.o src/os/lib.o $(OFILES) -T link.ld -o build/kernel8.elf
+kernel8.img: boot.o src/os/liba.o $(OFILES)
+	$(ARMGNU)-ld -nostdlib boot.o src/os/liba.o $(OFILES) -T link.ld -o build/kernel8.elf
 	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
 
 clean:
