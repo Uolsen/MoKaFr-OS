@@ -18,6 +18,7 @@ src/os/lib.o: src/os/lib.s
 
 kernel8.img: boot.o src/os/lib.o $(OFILES)
 	$(ARMGNU)-ld -nostdlib boot.o src/os/lib.o $(OFILES) -T link.ld -o build/kernel8.elf
+	$(ARMGNU)-objcopy --srec-forceS3 build/kernel8.elf -O srec build/kernel8.srec
 	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
 
 clean:

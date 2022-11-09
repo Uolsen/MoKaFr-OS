@@ -5,6 +5,7 @@
 // #include "handler.h"
 #include "timer/system_timer.h"
 #include "timer/arm_timer.h"
+#include "timer/local_timer.h"
 
 void main()
 {
@@ -14,7 +15,9 @@ void main()
     int64_t params2[] = {(uint64_t)get_el()};
     printk("We are at EL %u\r\n", params2);
 
-    arm_timer_init();
+    local_timer_init();
+
+    // arm_timer_init();
 
     // // system_timer_init();
     // for (uint32_t i = 0; i < 100000; i++)
