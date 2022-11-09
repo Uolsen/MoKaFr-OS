@@ -2,13 +2,13 @@
 #define _TRNG_H
 #include "lib.h"
 
-#define RANDOM_BASE_ADDR    0xFE104000
+#define RANDOM_BASE_ADDR    0xFE104000UL
 
-#define RNG_CTRL            (volatile uint32_t*) (RANDOM_BASE_ADDR + 0x00)
-#define RNG_STATUS          (volatile uint32_t*) (RANDOM_BASE_ADDR + 0x04)
-#define RNG_DATA            (volatile uint32_t*) (RANDOM_BASE_ADDR + 0x08)
-#define RNG_FF_THRESHOLD    (volatile uint32_t*) (RANDOM_BASE_ADDR + 0x0c)
-#define RNG_INT_MASK        (volatile uint32_t*) (RANDOM_BASE_ADDR + 0x10)
+#define RNG_CTRL            RANDOM_BASE_ADDR + 0x00UL
+#define RNG_STATUS          RANDOM_BASE_ADDR + 0x04UL
+#define RNG_DATA            RANDOM_BASE_ADDR + 0x08UL
+#define RNG_FF_THRESHOLD    RANDOM_BASE_ADDR + 0x0cUL
+#define RNG_INT_MASK        RANDOM_BASE_ADDR + 0x10UL
 
 uint64_t rand(uint64_t min, uint64_t max);
 
