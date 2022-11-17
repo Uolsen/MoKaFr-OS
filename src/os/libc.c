@@ -1,9 +1,10 @@
 #include "libc.h"
+#include "intdef.h"
 
-void mmio_write(long reg, unsigned int val) {
-    *(volatile unsigned int *) reg = val;
+void mmio_write(int64_t reg, uint32_t val) {
+    *(volatile uint32_t *) reg = val;
 }
 
-unsigned int mmio_read(long reg) {
-    return *(volatile unsigned int *) reg;
+uint32_t mmio_read(int64_t reg) {
+    return *(volatile uint32_t *) reg;
 }

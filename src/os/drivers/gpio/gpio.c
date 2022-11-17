@@ -2,13 +2,13 @@
 #include "drivers/gpio/gpio.h"
 #include "print/print.h"
 
-unsigned int gpio_call(unsigned int pin_number, unsigned  int value, unsigned int reg, unsigned int field_size) {
-    unsigned int field_mask = (1 << field_size) - 1;
+uint32_t gpio_call(uint32_t pin_number, uint32_t value, uint32_t reg, uint32_t field_size) {
+    uint32_t field_mask = (1 << field_size) - 1;
 
-    unsigned int num_fields = 32 / field_size;
-    unsigned int shift = (pin_number % num_fields) * field_size;
+    uint32_t num_fields = 32 / field_size;
+    uint32_t shift = (pin_number % num_fields) * field_size;
 
-    unsigned int cur_value = mmio_read(reg);
+    uint32_t cur_value = mmio_read(reg);
 
     int64_t params[] = {(uint64_t)cur_value};
 
@@ -21,7 +21,7 @@ unsigned int gpio_call(unsigned int pin_number, unsigned  int value, unsigned in
     return 1;
 }
 
-unsigned int gpio_set(unsigned int pin_number) {
+uint32_t gpio_set(uint32_t pin_number) {
     GpioRegister reg = GPSET0;
 
     // Get register for given pin
@@ -33,7 +33,7 @@ unsigned int gpio_set(unsigned int pin_number) {
     return gpio_call(pin_number, 1,reg, 1);
 }
 
-unsigned int gpio_clear(unsigned int pin_number) {
+uint32_t gpio_clear(uint32_t pin_number) {
     GpioRegister reg = GPCLR0;
 
     // Get register for given pin
@@ -45,7 +45,7 @@ unsigned int gpio_clear(unsigned int pin_number) {
     return gpio_call(pin_number, 1,reg, 1);
 }
 
-unsigned int gpio_set_function(unsigned int pin_number, GpioFunction gpio_function) {
+uint32_t gpio_set_function(uint32_t pin_number, GpioFunction gpio_function) {
     GpioRegister reg = GPFSEL0;
 
     // Get register for given pin
@@ -61,9 +61,9 @@ unsigned int gpio_set_function(unsigned int pin_number, GpioFunction gpio_functi
     return gpio_call(pin_number, gpio_function, reg, 3);
 
 //    // Calculate the bit index for given pin
-//    unsigned int bit = (pin_number % 10) * 3;
+//    uint32_t bit = (pin_number % 10) * 3;
 //
-//    unsigned int cur_value = mmio_read(reg);
+//    uint32_t cur_value = mmio_read(reg);
 //
 ////    int64_t params[] = {(uint64_t)cur_value};
 ////    printk("old gpio %u\r\n", params);
@@ -78,10 +78,10 @@ unsigned int gpio_set_function(unsigned int pin_number, GpioFunction gpio_functi
     return 1;
 }
 
-//unsigned int gpio_pull(unsigned int pin_number) {
+//uint32_t gpio_pull(uint32_t pin_number) {
 //    return gpio_call(pin_number, 1, GPPUPPDN0, 2, GPIO_MAX_PIN);
 //}
 //
-//unsigned int gpio_function(unsigned int pin_number) {
+//uint32_t gpio_function(uint32_t pin_number) {
 //    return gpio_call(pin_number, value, GPFSEL0, 3, GPIO_MAX_PIN);
 //}
