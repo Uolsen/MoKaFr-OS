@@ -18,3 +18,11 @@ void print_debug(char *string) {
     printk("DEBUG INFO: %s\r\n", params);
     #endif
 }
+
+void printk_debug(char *string, int64_t params[]) {
+    #ifdef DEBUG
+    print("DEBUG INFO: ");
+    printk(string, params);
+    print("\r\n");
+    #endif
+}

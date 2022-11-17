@@ -15,6 +15,7 @@ void main()
     int64_t params2[] = {(uint64_t)get_el()};
     printk("We are at EL %u\r\n", params2);
     DEBUG_F("Hello, Raspberry PI 4!!!");
+    DEBUG_K("Vypis s parametrem %u", params2);
     DEBUG_E(0);
     local_timer_init();
 
