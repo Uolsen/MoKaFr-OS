@@ -1,3 +1,6 @@
+#ifndef _GPIO_H
+#define _GPIO_H
+
 #define GPIO_BASE_ADDR 0xFE000000
 
 typedef enum {
@@ -79,3 +82,5 @@ unsigned int gpio_clear(unsigned int pin_number);
  * @return
  */
 unsigned int gpio_set_function(unsigned int pin_number, GpioFunction gpio_function);
+
+#endif
