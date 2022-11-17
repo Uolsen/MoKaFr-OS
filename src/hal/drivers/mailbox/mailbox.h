@@ -1,0 +1,4 @@
+#ifndef MOKAFR_MAILBOX_H
+#define MOKAFR_MAILBOX_H
+
+#endif //MOKAFR_MAILBOX_H

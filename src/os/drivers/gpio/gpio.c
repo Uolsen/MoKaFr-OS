@@ -11,14 +11,12 @@ unsigned int gpio_call(unsigned int pin_number, unsigned  int value, unsigned in
     unsigned int cur_value = mmio_read(reg);
 
     int64_t params[] = {(uint64_t)cur_value};
-    printk("gpio_call before %u\r\n", params);
 
     cur_value &= ~(field_mask << shift);
     cur_value |= value << shift;
 
     mmio_write(reg, cur_value);
     int64_t params2[] = {(uint64_t)cur_value};
-    printk("gpio_call after %u\r\n", params2);
 
     return 1;
 }
