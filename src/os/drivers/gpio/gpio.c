@@ -10,13 +10,10 @@ uint32_t gpio_call(uint32_t pin_number, uint32_t value, uint32_t reg, uint32_t f
 
     uint32_t cur_value = mmio_read(reg);
 
-    int64_t params[] = {(uint64_t)cur_value};
-
     cur_value &= ~(field_mask << shift);
     cur_value |= value << shift;
 
     mmio_write(reg, cur_value);
-    int64_t params2[] = {(uint64_t)cur_value};
 
     return 1;
 }
