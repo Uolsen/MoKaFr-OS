@@ -7,7 +7,8 @@
 		"stdint.h": "c",
 		"cstdint": "cpp",
 		"system_timer.h": "c",
-		"print.h": "c"
+		"print.h": "c",
+		"gpio.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "Enabled",
 	"C_Cpp.intelliSenseEngineFallback": "Disabled"

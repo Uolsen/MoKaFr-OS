@@ -6,6 +6,7 @@
 #include "timer/system_timer.h"
 #include "timer/arm_timer.h"
 #include "timer/local_timer.h"
+#include "interrupt/irq.h"
 #include "debug/debug.h"
 
 void main()
@@ -15,8 +16,12 @@ void main()
     int64_t params2[] = {(uint64_t)get_el()};
     printk("We are at EL %u\r\n", params2);
     DEBUG_F("Hello, Raspberry PI 4!!!");
-    DEBUG_E(0);
-    local_timer_init();
+
+    irq_init_vectors();
+    enable_interrupt_controller();
+    irq_enable();
+
+    // local_timer_init();
 
     // arm_timer_init();
 
