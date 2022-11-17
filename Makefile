@@ -7,8 +7,8 @@ ARMGNU ?= aarch64-none-elf
 
 all: clean kernel8.img
 
-boot.o: boot.S
-	$(ARMGNU)-gcc $(GCCFLAGS) -c boot.S -o boot.o
+src/os/boot.o: src/os/boot.S
+	$(ARMGNU)-gcc $(GCCFLAGS) -c src/os/boot.S -o src/os/boot.o
 
 src/os/liba.o: src/os/liba.s
 	$(ARMGNU)-gcc $(GCCFLAGS) -c src/os/liba.S -o src/os/liba.o
@@ -16,8 +16,8 @@ src/os/liba.o: src/os/liba.s
 %.o: %.c
 	$(ARMGNU)-gcc $(GCCFLAGS) -c $< -o $@
 
-kernel8.img: boot.o src/os/liba.o $(OFILES)
-	$(ARMGNU)-ld -nostdlib boot.o src/os/liba.o $(OFILES) -T link.ld -o build/kernel8.elf
+kernel8.img: src/os/boot.o src/os/liba.o $(OFILES)
+	$(ARMGNU)-ld -nostdlib src/os/boot.o src/os/liba.o $(OFILES) -T link.ld -o build/kernel8.elf
 	$(ARMGNU)-objcopy --srec-forceS3 build/kernel8.elf -O srec build/kernel8.srec
 	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
 
