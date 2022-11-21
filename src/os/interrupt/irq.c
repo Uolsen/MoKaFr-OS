@@ -8,7 +8,8 @@ void enable_interrupt_controller()
 {
 	// REGS_IRQ->irq0_enable_0 = UART_IRQ;
 	// REGS_IRQ->irq0_enable_1 = UART_IRQ;
-	mmio_write(IRQ_REG_IRQ0_SET_EN_0, AUX_IRQ);
+	// mmio_write(IRQ_REG_IRQ0_SET_EN_0, AUX_IRQ);
+	// mmio_write(IRQ_REG_IRQ0_SET_EN_0, SYS_TIMER_C0);
 	// mmio_write(IRQ_REG_IRQ0_SET_EN_1, UART_IRQ);
 	// mmio_write(IRQ_REG_IRQ0_SET_EN_1, 0);
 	// mmio_write(IRQ_REG_IRQ0_SET_EN_2, (1 << 31));

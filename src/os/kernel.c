@@ -9,7 +9,7 @@
 #include "interrupt/irq.h"
 #include "debug/debug.h"
 #include "timer/qemu_timer.h"
-#include "timer/local_timer.h"
+#include "timer/system_timer.h"
 
 void main()
 {
@@ -27,11 +27,14 @@ void main()
     // DEBUG_F("irq_enable INIT");
 
     init_interrupt_controller();
+    init_interrupt_controller();
     enable_irq();
     DEBUG_F("enable_irq();");
-    local_timer_init();
-    local_timer_reset();
+    // local_timer_init();
+    // local_timer_reset();
     DEBUG_F("local_timer_reset();");
+    system_timer_init();
+    DEBUG_F("system_timer_init();");
 
 
     // // handle_irq();

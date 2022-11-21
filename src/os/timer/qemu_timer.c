@@ -67,7 +67,7 @@ void handler(uint64_t numid, uint64_t esr, uint64_t elr)
     switch (numid) {
         case 1:
             // printk("sync error at %x: %x\r\n", elr, esr);
-			local_timer_reset();
+			// local_timer_reset();
             while (1) { }
             break;
 
@@ -78,7 +78,7 @@ void handler(uint64_t numid, uint64_t esr, uint64_t elr)
                 timer_interrupt_handler();
             }
             else if (irq == 96 + 57) {
-				local_timer_reset();
+				// local_timer_reset();
                 uart_handler();
             }
             else {
