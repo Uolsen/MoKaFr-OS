@@ -2,7 +2,7 @@
 #include "drivers/gfx/mb.h"
 #include "drivers/gfx/terminal.h"
 
-unsigned int width, height, pitch, isrgb;
+uint32_t width, height, pitch, isrgb;
 unsigned char *fb;
 
 void fb_init()
@@ -13,14 +13,14 @@ void fb_init()
     mbox[2] = MBOX_TAG_SETPHYWH; // Tag identifier
     mbox[3] = 8; // Value size in bytes
     mbox[4] = 0;
-    mbox[5] = 1920; // Value(width)
-    mbox[6] = 1080; // Value(height)
+    mbox[5] = 400; // Value(width)
+    mbox[6] = 225; // Value(height)
 
     mbox[7] = MBOX_TAG_SETVIRTWH;
     mbox[8] = 8;
     mbox[9] = 8;
-    mbox[10] = 1920;
-    mbox[11] = 1080;
+    mbox[10] = 400;
+    mbox[11] = 225;
 
     mbox[12] = MBOX_TAG_SETVIRTOFF;
     mbox[13] = 8;
@@ -58,22 +58,22 @@ void fb_init()
         height = mbox[11];      // Actual physical height
         pitch = mbox[33];       // Number of bytes per line
         isrgb = mbox[24];       // Pixel order
-        fb = (unsigned char *)((long)mbox[28]);
+        fb = (unsigned char *)((int64_t)mbox[28]);
     }
 }
 
-void drawPixel(int x, int y, unsigned char attr)
+void drawPixel(int32_t x, int32_t y, unsigned char attr)
 {
-    int offs = (y * pitch) + (x * 4);
-    *((unsigned int*)(fb + offs)) = vgapal[attr & 0x0f];
+    int32_t offs = (y * pitch) + (x * 4);
+    *((uint32_t*)(fb + offs)) = vgapal[attr & 0x0f];
 }
 
-void drawRect(int x1, int y1, int x2, int y2, unsigned char attr, int fill)
+void drawRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2, unsigned char attr, int32_t fill)
 {
-    int y=y1;
+    int32_t y=y1;
 
     while (y <= y2) {
-        int x=x1;
+        int32_t x=x1;
         while (x <= x2) {
             if ((x == x1 || x == x2) || (y == y1 || y == y2)) drawPixel(x, y, attr);
             else if (fill) drawPixel(x, y, (attr & 0xf0) >> 4);
@@ -83,9 +83,9 @@ void drawRect(int x1, int y1, int x2, int y2, unsigned char attr, int fill)
     }
 }
 
-void drawLine(int x1, int y1, int x2, int y2, unsigned char attr)
+void drawLine(int32_t x1, int32_t y1, int32_t x2, int32_t y2, unsigned char attr)
 {
-    int dx, dy, p, x, y;
+    int32_t dx, dy, p, x, y;
 
     dx = x2-x1;
     dy = y2-y1;
@@ -106,11 +106,11 @@ void drawLine(int x1, int y1, int x2, int y2, unsigned char attr)
     }
 }
 
-void drawCircle(int x0, int y0, int radius, unsigned char attr, int fill)
+void drawCircle(int32_t x0, int32_t y0, int32_t radius, unsigned char attr, int32_t fill)
 {
-    int x = radius;
-    int y = 0;
-    int err = 0;
+    int32_t x = radius;
+    int32_t y = 0;
+    int32_t err = 0;
 
     while (x >= y) {
         if (fill) {
@@ -140,12 +140,12 @@ void drawCircle(int x0, int y0, int radius, unsigned char attr, int fill)
     }
 }
 
-void drawChar(unsigned char ch, int x, int y, unsigned char attr)
+void drawChar(unsigned char ch, int32_t x, int32_t y, unsigned char attr)
 {
     unsigned char *glyph = (unsigned char *)&font + (ch < FONT_NUMGLYPHS ? ch : 0) * FONT_BPG;
 
-    for (int i=0;i<FONT_HEIGHT;i++) {
-        for (int j=0;j<FONT_WIDTH;j++) {
+    for (int32_t i=0;i<FONT_HEIGHT;i++) {
+        for (int32_t j=0;j<FONT_WIDTH;j++) {
             unsigned char mask = 1 << j;
             unsigned char col = (*glyph & mask) ? attr & 0x0f : (attr & 0xf0) >> 4;
 
@@ -155,7 +155,7 @@ void drawChar(unsigned char ch, int x, int y, unsigned char attr)
     }
 }
 
-void drawString(int x, int y, char *s, unsigned char attr)
+void drawString(int32_t x, int32_t y, char *s, unsigned char attr)
 {
     while (*s) {
         if (*s == '\r') {

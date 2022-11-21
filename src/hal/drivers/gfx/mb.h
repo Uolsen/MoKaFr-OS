@@ -1,7 +1,9 @@
 #ifndef MOKAFR_MB_H
 #define MOKAFR_MB_H
 
-extern volatile unsigned int mbox[36];
+#include "intdef.h"
+
+extern volatile uint32_t mbox[36];
 
 enum {
     MBOX_REQUEST  = 0
@@ -34,6 +36,6 @@ enum {
     MBOX_TAG_LAST       = 0
 };
 
-unsigned int mbox_call(unsigned char ch);
+uint32_t mbox_call(unsigned char ch);
 
 #endif //MOKAFR_MB_H

@@ -1,8 +1,9 @@
 #include "drivers/gfx/mb.h"
 #include "libc.h"
+#include "intdef.h"
 
 // The buffer must be 16-byte aligned as only the upper 28 bits of the address can be passed via the mailbox
-volatile unsigned int __attribute__((aligned(16))) mbox[36];
+volatile uint32_t __attribute__((aligned(16))) mbox[36];
 
 enum {
     VIDEOCORE_MBOX = (PERIPHERAL_BASE + 0x0000B880),
@@ -17,10 +18,10 @@ enum {
     MBOX_EMPTY     = 0x40000000
 };
 
-unsigned int mbox_call(unsigned char ch)
+uint32_t mbox_call(unsigned char ch)
 {
     // 28-bit address (MSB) and 4-bit value (LSB)
-    unsigned int r = ((unsigned int)((long) &mbox) &~ 0xF) | (ch & 0xF);
+    uint32_t r = ((uint32_t)((int64_t) &mbox) &~ 0xF) | (ch & 0xF);
 
     // Wait until we can write
     while (mmio_read(MBOX_STATUS) & MBOX_FULL);
