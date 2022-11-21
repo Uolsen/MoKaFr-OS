@@ -1,7 +1,7 @@
 #ifndef MOKAFR_TERMINAL_H
 #define MOKAFR_TERMINAL_H
 
-unsigned int vgapal[] = {
+uint32_t vgapal[] = {
         0x000000,
         0x0000AA,
         0x00AA00,
