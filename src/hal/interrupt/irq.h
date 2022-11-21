@@ -3,31 +3,29 @@
 #include "drivers/gpio/gpio.h"
 #include "lib.h"
 
-struct arm_irq_regs_2711 {
-    volatile uint64_t irq0_pending_0;
-    volatile uint64_t irq0_pending_1;
-    volatile uint64_t irq0_pending_2;
-    volatile uint64_t res0;
-    volatile uint64_t irq0_enable_0;
-    volatile uint64_t irq0_enable_1;
-    volatile uint64_t irq0_enable_2;
-    volatile uint64_t res1;
-    volatile uint64_t irq0_disable_0;
-    volatile uint64_t irq0_disable_1;
-    volatile uint64_t irq0_disable_2;
-};
+#define GIC_BASE  0xff840000
 
-typedef struct arm_irq_regs_2711 arm_irq_regs;
+#define IRQ_REG_IRQ0_PENDING0		GPIO_BASE_ADDR + 0x200UL
+#define IRQ_REG_IRQ0_PENDING1		GPIO_BASE_ADDR + 0x204UL
+#define IRQ_REG_IRQ0_PENDING2		GPIO_BASE_ADDR + 0x208UL
+#define IRQ_REG_IRQ0_SET_EN_0		GPIO_BASE_ADDR + 0x210UL
+#define IRQ_REG_IRQ0_SET_EN_1		GPIO_BASE_ADDR + 0x214UL
+#define IRQ_REG_IRQ0_SET_EN_2		GPIO_BASE_ADDR + 0x218UL
+#define IRQ_REG_IRQ0_CLR_EN_0		GPIO_BASE_ADDR + 0x220UL
+#define IRQ_REG_IRQ0_CLR_EN_1		GPIO_BASE_ADDR + 0x224UL
+#define IRQ_REG_IRQ0_CLR_EN_2		GPIO_BASE_ADDR + 0x228UL
 
-#define REGS_IRQ ((arm_irq_regs *)(GPIO_BASE_ADDR + 0x0000B200))
-
-enum irqs {
+enum vc_irqs1 {
     SYS_TIMER_IRQ_0 = 1,
     SYS_TIMER_IRQ_1 = 2,
     SYS_TIMER_IRQ_2 = 4,
     SYS_TIMER_IRQ_3 = 8,
     AUX_IRQ = (1 << 29),
-    UART_IRQ = 153,
+    ARM_IRQ = (1 << 30),
+};
+
+enum vc_irqs2 {
+    UART_IRQ = (1 << (57-32)),
 };
 
 void irq_init_vectors();

@@ -6,12 +6,15 @@ _start:
     // Check processor ID is zero (executing on main core), else hang
     mrs     x1, mpidr_el1
     and     x1, x1, #3
-    cbz     x1, 2f
+    cmp     x1, #0
+    beq     kernel_entry
+    
     // We're not on the main core, so hang in an infinite wait loop
 end:  
     wfe
     bl       end
-2:  // We're on the main core!
+
+kernel_entry:  // We're on the main core!
 
     // Swith to EL1
     mrs x0, CurrentEL
@@ -44,6 +47,9 @@ el1_entry:
     str     xzr, [x1], #8
     sub     w2, w2, #1
     cbnz    w2, 3b               // Loop if non-zero
+
+    ldr x0, =vector_table
+    msr vbar_el1, x0
 
     // Jump to our main() routine in C (make sure it doesn't return)
 4:  bl      main
