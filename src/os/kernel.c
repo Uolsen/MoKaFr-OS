@@ -26,12 +26,13 @@ void main()
     // irq_enable();
     // DEBUG_F("irq_enable INIT");
 
-    DEBUG_F("trng:");
-    int64_t params0[] = {(uint64_t)rand(10, 1000)};
+    DEBUG_F("TRNG:");
+    init_rand();
+    int64_t params0[] = {rand(10, 1000)};
     printk("num 1: %u\r\n", params0);
-    int64_t params1[] = {(uint64_t)rand(10, 1000)};
+    int64_t params1[] = {rand(10, 1000)};
     printk("num 2: %u\r\n", params1);
-    int64_t params3[] = {(uint64_t)rand(10, 1000)};
+    int64_t params3[] = {rand(10, 1000)};
     printk("num 3: %u\r\n", params3);
 
     init_interrupt_controller();

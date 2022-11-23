@@ -2,27 +2,7 @@
 #include "print/print.h"
 #include "debug/debug.h"
 
-/*uint64_t rand(uint64_t min, uint64_t max) {
-    uint64_t ctrl_value = in_word(RNG_CTRL);
-
-    ctrl_value = ctrl_value & 1;
-
-    if (!(ctrl_value)) {           // initialize on first call
-   //     RNG_STATUS = 0x40000;          // not sure why is this important, but linux does it this way
- //       RNG_INT_MASK |= 1;             // mask interrupt
-        ctrl_value |= 1;                 // enable the generator
-
-        out_word(RNG_CTRL, ctrl_value);
-
-        while (!(in_word(RNG_STATUS) >> 24)){
-            uint64_t status = in_word(RNG_STATUS);
-            status = status >> 24;
-            out_word(RNG_STATUS, status);
-        } ; // wait until it's entropy good enough
-    }
-    return ((((uint64_t)in_word(RNG_DATA) << 32) | in_word(RNG_DATA)) % (max - min)) + min;
-}*/
-
+/*
 uint64_t rand(uint64_t min, uint64_t max) {
     uint64_t ctrl_value = mmio_read(RNG_CTRL);
    // if (ctrl_value & 1) {
@@ -46,4 +26,22 @@ uint64_t rand(uint64_t min, uint64_t max) {
     //return ((((uint64_t)mmio_read(RNG_DATA) << 32) | mmio_read(RNG_DATA)) % (max - min)) + min;
     // vypisuje 0 :(
     return mmio_read(RNG_DATA);
+}
+*/
+
+void init_rand() {
+    mmio_write(RNG_STATUS, 0x40000);
+    uint64_t mask_value = mmio_read(RNG_INT_MASK);
+    mask_value |= 1;
+    mmio_write(RNG_INT_MASK, mask_value);
+    uint64_t ctrl_value = mmio_read(RNG_CTRL);
+    ctrl_value |= 1;
+    mmio_write(RNG_CTRL, ctrl_value);
+    DEBUG_F("RAND INIT OK");
+}
+
+uint64_t rand(uint64_t min, uint64_t max) {
+    uint64_t status_value = mmio_read(RNG_STATUS);
+    while(!(status_value >> 24)) ;
+    return mmio_read(RNG_DATA) % (max-min) + min;
 }
