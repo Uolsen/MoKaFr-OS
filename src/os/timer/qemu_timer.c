@@ -1,13 +1,12 @@
 #include "timer/qemu_timer.h"
 #include "timer/local_timer.h"
+#include "timer/system_timer.h""
 #include "debug/debug.h"
 #include "lib.h"
 
-static uint64_t ticks = 0;
-
 void init_interrupt_controller(void)
 {
-    mmio_write(DIST, 0);
+    mmio_write(DISTRIBUTOR, 0);
     mmio_write(CPU_INTERFACE, 0);
 
     mmio_write(ICC_PR, 0xff);
@@ -24,14 +23,15 @@ void init_interrupt_controller(void)
     mmio_write(ICD_ISENABLE + 8, 1);
     mmio_write(ICD_ISENABLE + 16, (1 << 25));
 
-    mmio_write(DIST, 1);
+    mmio_write(DISTRIBUTOR, 1);
     mmio_write(CPU_INTERFACE, 1);
 }
 
 void init_timer(void)
 {
     mmio_write(TIMER_PREDIV, 0x7d);
-    mmio_write(TIMER_LOAD, 19841);
+    // mmio_write(TIMER_LOAD, 19841);
+    mmio_write(TIMER_LOAD, 4000000);
     mmio_write(TIMER_CTL, 0b10100010);
 }
 
@@ -42,12 +42,13 @@ static uint32_t get_irq_number(void)
 
 static void timer_interrupt_handler(void)
 {
+
+	uint64_t ticks = 0;
     uint32_t mask = mmio_read(TIMER_MSKIRQ);
 
     if (mask & 1) {
-        if (ticks % 100 == 0) {
-            printk("timer %u\r\n", ticks);
-        }
+		uint64_t data[] = {{ticks}};
+		DEBUG_K("timer %u\r\n", data);
 
         ticks++;
         mmio_write(TIMER_ACK, 1);
@@ -61,6 +62,9 @@ void handler(uint64_t numid, uint64_t esr, uint64_t elr)
 	int64_t data[] = {irq, numid};
 
 	DEBUG_K("handler() %u %u", data);
+	// init_timer();
+
+	// system_timer_init();
 
 	// local_timer_reset();
 

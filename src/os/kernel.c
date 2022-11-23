@@ -26,6 +26,7 @@ void main()
     // irq_enable();
     // DEBUG_F("irq_enable INIT");
 
+    // init_interrupt_controller();
     DEBUG_F("TRNG:");
     init_rand();
     int64_t params0[] = {rand(10, 1000)};
@@ -36,13 +37,14 @@ void main()
     printk("num 3: %u\r\n", params3);
 
     init_interrupt_controller();
-    init_interrupt_controller();
+    // enable_interrupt_controller();
     enable_irq();
     DEBUG_F("enable_irq();");
     // local_timer_init();
     // local_timer_reset();
     DEBUG_F("local_timer_reset();");
-    system_timer_init();
+    // system_timer_init();
+    init_timer();
     DEBUG_F("system_timer_init();");
 
 
