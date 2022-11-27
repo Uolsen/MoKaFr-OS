@@ -2,10 +2,52 @@
 #include "uart/uart.h"
 #include "lib.h"
 
+int length = 0;
+int rows = 0;
+int font_width = 8;
+int line_height = 20;
+int x_base = 50;
+int y_base = 60;
+int crln = 0;
+
 void write_char(unsigned char c)
 {
     while (in_word(UART0_FR) & (1 << 3)) { }
     out_word(UART0_DR, c);
+
+    // Draw on screen
+    int x = x_base + (length * font_width);
+
+    if (c == '\r' || c == '\n') {
+        if (crln == 0) {
+            rows += 1;
+            length = 0;
+            crln = 1;
+        }
+    } else {
+        crln = 0;
+    }
+//        if (crln == 0) {
+//            crln = 1;
+//            length = 0;
+//            rows += 1;
+//        } else {
+//            crln = 0;
+//        }
+//    } else {
+        drawChar(c, x, y_base + (rows * line_height), 0x05);
+
+        length += 1;
+        if (length >= 226) {
+            length = 0;
+            rows += 1;
+
+            if (rows >= 48) {
+                rows = 0;
+                fb_clear();
+            }
+        }
+//    }
 }
 
 unsigned char read_char(void)
@@ -50,4 +92,17 @@ void init_uart(void)
     out_word(UART0_LCRH, (1 << 5) | (1 << 6));
     out_word(UART0_IMSC, (1 << 4));
     out_word(UART0_CR, (1 << 0) | (1 << 8) | (1 << 9));
+}
+
+void init_uart_5(void)
+{
+    gpio_set_function(12, Alt_4);
+    gpio_set_function(13, Alt_4);
+
+    out_word(UART5_CR, 0);
+    out_word(UART5_IBRD, 26);
+    out_word(UART5_FBRD, 0);
+    out_word(UART5_LCRH, (1 << 5) | (1 << 6));
+    out_word(UART5_IMSC, (1 << 4));
+    out_word(UART5_CR, (1 << 0) | (1 << 8) | (1 << 9));
 }
