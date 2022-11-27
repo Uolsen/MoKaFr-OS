@@ -19,8 +19,14 @@
     printk_debug(string, params);       \
 } while (0)
 
+// debug pro jeden parametr
+#define DEBUG_P(string, param) do {    \
+    printk_debug_p(string, param);     \
+} while (0)
+
 void error_check(char *file, uint64_t line);
 void print_debug(char *string);
 void printk_debug(char *string, int64_t params[]);
+void printk_debug_p(char *string, int64_t param);
 
 #endif
