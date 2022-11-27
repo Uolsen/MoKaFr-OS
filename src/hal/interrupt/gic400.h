@@ -1,5 +1,5 @@
-#ifndef _QEMU_TIMER_H
-#define _QEMU_TIMER_H
+#ifndef _GIC400_H
+#define _GIC400_H
 
 #define GIC_BASE  0xff840000
 #define BASE_ADDR 0xfe000000
@@ -19,18 +19,9 @@
 #define ICC_PR              CPU_INTERFACE + 0x4
 #define ICC_ACK             CPU_INTERFACE + 0xc
 #define ICC_EOI             CPU_INTERFACE + 0x10
-
-
-#define TIMER_LOAD          (BASE_ADDR + 0xB400)
-#define TIMER_VALUE         (BASE_ADDR + 0xB404)
-#define TIMER_CTL           (BASE_ADDR + 0xB408)
-#define TIMER_ACK           (BASE_ADDR + 0xB40C)
-#define TIMER_MSKIRQ        (BASE_ADDR + 0xB414)
-#define TIMER_PREDIV        (BASE_ADDR + 0xB41c)
  
 
 void init_interrupt_controller(void);
-void init_timer(void);
 void enable_irq(void);
 
 #endif

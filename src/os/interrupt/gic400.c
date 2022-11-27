@@ -1,6 +1,6 @@
-#include "timer/qemu_timer.h"
-#include "timer/local_timer.h"
-#include "timer/system_timer.h""
+#include "interrupt/gic400.h"
+#include "timer/arm_timer.h"
+#include "uart/uart.h"
 #include "debug/debug.h"
 #include "lib.h"
 
@@ -27,51 +27,24 @@ void init_interrupt_controller(void)
     mmio_write(CPU_INTERFACE, 1);
 }
 
-void init_timer(void)
-{
-    mmio_write(TIMER_PREDIV, 0x7d);
-    // mmio_write(TIMER_LOAD, 19841);
-    mmio_write(TIMER_LOAD, 4000000);
-    mmio_write(TIMER_CTL, 0b10100010);
-}
 
 static uint32_t get_irq_number(void)
 {
     return mmio_read(ICC_ACK);
 }
 
-static void timer_interrupt_handler(void)
-{
-
-	uint64_t ticks = 0;
-    uint32_t mask = mmio_read(TIMER_MSKIRQ);
-
-    if (mask & 1) {
-		uint64_t data[] = {{ticks}};
-		DEBUG_K("timer %u\r\n", data);
-
-        ticks++;
-        mmio_write(TIMER_ACK, 1);
-    }
-}
-
 void handler(uint64_t numid, uint64_t esr, uint64_t elr)
 {
+    // uint32_t irq = get_irq_number();
     uint32_t irq;
 
 	int64_t data[] = {irq, numid};
 
 	DEBUG_K("handler() %u %u", data);
-	// init_timer();
-
-	// system_timer_init();
-
-	// local_timer_reset();
 
     switch (numid) {
         case 1:
             // printk("sync error at %x: %x\r\n", elr, esr);
-			// local_timer_reset();
             while (1) { }
             break;
 
@@ -82,11 +55,10 @@ void handler(uint64_t numid, uint64_t esr, uint64_t elr)
                 timer_interrupt_handler();
             }
             else if (irq == 96 + 57) {
-				// local_timer_reset();
                 uart_handler();
             }
             else {
-                // printk("unknown irq\r\n");
+                DEBUG_F("unknown irq\r\n");
                 while (1) { }
             }
 
