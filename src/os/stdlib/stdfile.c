@@ -9,7 +9,7 @@ uint32_t getpid() {
     return pid;
 }
 
-uint32_t open(const char* filename, FileMode mode) {
+uint32_t open(const char* filename, Open_mode mode) {
     uint32_t file;
 
     asm volatile("mov x0, %0" : : "r" (filename));
