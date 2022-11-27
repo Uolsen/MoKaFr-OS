@@ -38,7 +38,7 @@ void uart_handler(void)
         }
         else if (ch == '\\')
         {
-            timer_interrupt_handler();
+            // timer_interrupt_handler();
             return;
         }
         else

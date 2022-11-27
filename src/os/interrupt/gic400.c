@@ -38,21 +38,26 @@ void handler(uint64_t numid, uint64_t esr, uint64_t elr)
     // uint32_t irq = get_irq_number();
     uint32_t irq;
 
-	int64_t data[] = {irq, numid};
+	// int64_t data[] = {irq, numid};
 
-	DEBUG_K("handler() %u %u", data);
+	DEBUG_P("handler() numid: %u", numid);
 
     switch (numid) {
         case 1:
             // printk("sync error at %x: %x\r\n", elr, esr);
+            DEBUG_P("handler() esr: %u", esr);
+            DEBUG_P("handler() elr: %u", elr);
             while (1) { }
             break;
 
         case 2:
             irq = get_irq_number();
 
+            DEBUG_P("handler() irq: %u", irq);
+
             if (irq == 64) {
                 timer_interrupt_handler();
+                // init_timer();
             }
             else if (irq == 96 + 57) {
                 uart_handler();

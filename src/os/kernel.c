@@ -29,20 +29,23 @@ void main()
     DEBUG_F("init_timer();");
 
 
-    int res = copy_process((uint64_t)&process, (uint64_t)"12345");
+    // uint32_t res = copy_process((uint64_t)&process, (uint64_t)"12345");
 
-    if (res != 0) {
-        print("error while starting process 1");
-        return;
-    }
+    // DEBUG_P("process res: %u", res);
 
-    res = copy_process((uint64_t)&process, (uint64_t)"abcde");
-    if (res != 0) {
-        print("error while starting process 2");
-        return;
-    }
+    // if (res != 0) {
+    //     print("error while starting process 1");
+    //     return;
+    // }
+    // res = copy_process((uint64_t)&process, (uint64_t)"abcde");
+
+    // DEBUG_P("process res: %u", res);
+    // if (res != 0) {
+    //     print("error while starting process 2");
+    //     return;
+    // }
 
     while (1){
-        schedule();
+    //     schedule();
     }
 }

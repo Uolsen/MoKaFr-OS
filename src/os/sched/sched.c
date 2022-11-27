@@ -1,6 +1,7 @@
 #include "sched/sched.h"
 #include "lib.h"
 #include "interrupt/gic400.h"
+#include "debug/debug.h"
 
 static struct task_struct init_task = INIT_TASK;
 struct task_struct *current = &(init_task);
@@ -21,7 +22,7 @@ void preempt_enable(void)
 void _schedule(void)
 {
 	preempt_disable();
-	uint32_t next,c;
+	int32_t next,c;
 	struct task_struct * p;
 	while (1) {
 		c = -1;
@@ -55,10 +56,13 @@ void schedule(void)
 
 void switch_to(struct task_struct * next) 
 {
+	// DEBUG_F("switch_to");
 	if (current == next) 
 		return;
 	struct task_struct * prev = current;
 	current = next;
+	DEBUG_P("switch_to prev: %u", prev);
+	DEBUG_P("switch_to next: %u", next);
 	cpu_switch_to(prev, next);
 }
 

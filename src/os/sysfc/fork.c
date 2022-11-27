@@ -21,7 +21,7 @@ uint32_t copy_process(uint64_t fn, uint64_t arg)
 	p->cpu_context.x20 = arg;
 	p->cpu_context.pc = (uint64_t)ret_from_fork;
 	p->cpu_context.sp = (uint64_t)p + THREAD_SIZE;
-	int pid = nr_tasks++;
+	uint32_t pid = nr_tasks++;
 	task[pid] = p;	
 	preempt_enable();
 	return 0;
