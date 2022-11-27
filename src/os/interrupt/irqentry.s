@@ -1,6 +1,5 @@
 .section .text
 .global vector_table
-.global enable_irq
 
 .balign 0x800
 vector_table:
@@ -198,7 +197,13 @@ error:
     add sp, sp, #(32 * 8)
     eret
     
+.global enable_irq
 enable_irq:
     msr daifclr, #2
     ret
+
+.global disable_irq
+disable_irq:
+	msr	daifset, #2
+	ret
     

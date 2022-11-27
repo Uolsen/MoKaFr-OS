@@ -12,7 +12,9 @@
 		"local_timer.h": "c",
 		"liba.h": "c",
 		"intdef.h": "c",
-		"libc.h": "c"
+		"libc.h": "c",
+		"arm_timer.h": "c",
+		"gic400.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "Enabled",
 	"C_Cpp.intelliSenseEngineFallback": "Disabled"

@@ -26,3 +26,12 @@ void printk_debug(char *string, int64_t params[]) {
     print("\r\n");
     #endif
 }
+
+void printk_debug_p(char *string, int64_t param) {
+    #ifdef DEBUG
+    print("DEBUG INFO: ");
+    int64_t params[] = {param};
+    printk(string, params);
+    print("\r\n");
+    #endif
+}
