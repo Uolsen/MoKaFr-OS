@@ -13,6 +13,7 @@ void init_timer(void)
 
 void timer_interrupt_handler(void)
 {
+    DEBUG_F("timer_interrupt_handler");
 	uint64_t ticks = 0;
     uint32_t mask = mmio_read(ARM_TIMER_MSKIRQ);
 
@@ -22,6 +23,5 @@ void timer_interrupt_handler(void)
 
         ticks++;
         mmio_write(ARM_TIMER_IRQCNTL, 1);
-
     }
 }
