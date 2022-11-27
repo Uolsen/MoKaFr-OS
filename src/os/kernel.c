@@ -1,84 +1,51 @@
 #include "uart/uart.h"
 #include "print/print.h"
-// #include "debug.h"
 #include "lib.h"
-// #include "handler.h"
-// #include "timer/system_timer.h"
-// #include "timer/arm_timer.h"
-// #include "timer/local_timer.h"
 #include "debug/debug.h"
 #include "timer/arm_timer.h"
 #include "interrupt/gic400.h"
 
+void process(char *array)
+{
+	while (1){
+		for (int i = 0; i < 5; i++){
+			write_char(array[i]);
+			delay(100000);
+		}
+	}
+}
+
 void main()
 {
     init_uart();
-    print("Hello, Raspberry pi\r\n");
-    int64_t params2[] = {(uint64_t)get_el()};
-    printk("We are at EL %u\r\n", params2);
-    DEBUG_F("Hello, Raspberry PI 4!!!");
-
-    // init_interrupt_controller();
-    // DEBUG_F("trng:");
-    // int64_t params0[] = {(uint64_t)rand(10, 1000)};
-    // printk("num 1: %u\r\n", params0);
-    // int64_t params1[] = {(uint64_t)rand(10, 1000)};
-    // printk("num 2: %u\r\n", params1);
-    // int64_t params3[] = {(uint64_t)rand(10, 1000)};
-    // printk("num 3: %u\r\n", params3);
-
-    init_interrupt_controller();
-    // enable_interrupt_controller();
-    enable_irq();
-    DEBUG_F("enable_irq();");
-    // local_timer_init();
-    // local_timer_reset();
-    DEBUG_F("local_timer_reset();");
-    // init_timer();
-    DEBUG_F("system_timer_init();");
-
-
     fb_init();
+    init_interrupt_controller();
+    enable_irq();
+    print("Hello, Raspberry pi\r\n");
+    int64_t params[] = {(uint64_t)get_el()};
+    printk("We are at EL %u\r\n", params);
 
-//    drawRect(150,150,400,400,0x03,0);
-//    drawRect(300,300,350,350,0x2e,1);
-//
-//    for (uint32_t i = 0; i < 16; i++) {
-//        drawRect(1400, 150 + (i*(20+5)), 20, 20, 0x03, 0);
-//    }
-//
-//    drawCircle(960,540,250,0x0e,0);
-//    drawCircle(960,540,50,0x13,1);
-//
-//    drawPixel(250,250,0x0e);
+    init_timer();
+    DEBUG_F("init_timer();");
 
-    drawChar('O',500,500,0x05);
-    drawString(40,40,"Welcome to MoKaFr OS!",0x0f);
 
-//    drawLine(100,500,350,700,0x0c);
+    // uint32_t res = copy_process((uint64_t)&process, (uint64_t)"12345");
 
-    // local_timer_init();
+    // DEBUG_P("process res: %u", res);
 
-    // arm_timer_init();
-
-    // // system_timer_init();
-    // for (uint32_t i = 0; i < 100000; i++)
-    // {
-            
+    // if (res != 0) {
+    //     print("error while starting process 1");
+    //     return;
     // }
-    
-    // system_timer_init();
+    // res = copy_process((uint64_t)&process, (uint64_t)"abcde");
 
-    // char buffer[1024];
-    // int buffer_size = 0;
-    // decimal_to_string(buffer, 0, (uint64_t)get_el());
-    // printk(buffer);
+    // DEBUG_P("process res: %u", res);
+    // if (res != 0) {
+    //     print("error while starting process 2");
+    //     return;
+    // }
 
-    //init_timer();
-    // init_interrupt_controller();
-    // enable_irq();
-    
-    while (1) {
-        ;
+    while (1){
+    //     schedule();
     }
 }
