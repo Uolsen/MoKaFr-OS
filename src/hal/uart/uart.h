@@ -12,6 +12,21 @@
 #define UART0_IMSC      IO_BASE_ADDR + 0x1038
 #define UART0_MIS       IO_BASE_ADDR + 0x1040
 #define UART0_ICR       IO_BASE_ADDR + 0x1044
+#define UART0_IFLS      IO_BASE_ADDR + 0x1034
+#define UART0_RIS       IO_BASE_ADDR + 0x103C
+
+
+#define UART5_DR        IO_BASE_ADDR + 0x1a00
+#define UART5_FR        IO_BASE_ADDR + 0x1a18
+#define UART5_CR        IO_BASE_ADDR + 0x1a30
+#define UART5_LCRH      IO_BASE_ADDR + 0x1a2c
+#define UART5_FBRD      IO_BASE_ADDR + 0x1a28
+#define UART5_IBRD      IO_BASE_ADDR + 0x1a24
+#define UART5_IMSC      IO_BASE_ADDR + 0x1a38
+#define UART5_MIS       IO_BASE_ADDR + 0x1a40
+#define UART5_ICR       IO_BASE_ADDR + 0x1a44
+#define UART5_IFLS      IO_BASE_ADDR + 0x1a34
+#define UART5_RIS       IO_BASE_ADDR + 0x1a3C
 
 unsigned char read_char(void);
 void write_char(unsigned char c);
