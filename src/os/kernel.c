@@ -3,6 +3,7 @@
 #include "lib.h"
 #include "debug/debug.h"
 #include "timer/arm_timer.h"
+#include "sysfc/fork.h"
 #include "interrupt/gic400.h"
 
 void process(char *array)
@@ -34,8 +35,8 @@ void main()
         print("error while starting process 1");
         return;
     }
+    
     res = copy_process((uint64_t)&process, (uint64_t)"abcde");
-
     DEBUG_P("process res: %u", res);
     if (res != 0) {
         print("error while starting process 2");
