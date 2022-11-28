@@ -13,14 +13,14 @@ void fb_init()
     mbox[2] = MBOX_TAG_SETPHYWH; // Tag identifier
     mbox[3] = 8; // Value size in bytes
     mbox[4] = 0;
-    mbox[5] = 400; // Value(width)
-    mbox[6] = 225; // Value(height)
+    mbox[5] = 1920; // Value(width)
+    mbox[6] = 1080; // Value(height)
 
     mbox[7] = MBOX_TAG_SETVIRTWH;
     mbox[8] = 8;
     mbox[9] = 8;
-    mbox[10] = 400;
-    mbox[11] = 225;
+    mbox[10] = 1920;
+    mbox[11] = 1080;
 
     mbox[12] = MBOX_TAG_SETVIRTOFF;
     mbox[13] = 8;
@@ -167,5 +167,16 @@ void drawString(int32_t x, int32_t y, char *s, unsigned char attr)
             x += FONT_WIDTH;
         }
         s++;
+    }
+}
+
+void fb_clear() {
+    uint32_t x = 0;
+    uint32_t y = 0;
+
+    for(x = 0; x < 1920; x++) {
+        for(y = 0; y < 1080; y++) {
+            drawPixel(x, y, 0x0);
+        }
     }
 }

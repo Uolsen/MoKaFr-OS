@@ -8,4 +8,6 @@
 void mmio_write(uint64_t reg, uint32_t val);
 uint64_t mmio_read(uint64_t reg);
 
+void wait_ms(uint32_t ms);
+
 #endif
