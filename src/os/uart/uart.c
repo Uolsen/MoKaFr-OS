@@ -1,6 +1,7 @@
 #include "drivers/gpio/gpio.h"
 #include "timer/arm_timer.h"
 #include "uart/uart.h"
+#include "sched/sched.h"
 #include "lib.h"
 
 int length = 0;
@@ -81,6 +82,7 @@ void uart_handler(void)
         else if (ch == '\\')
         {
             // timer_interrupt_handler();
+            timer_tick();
             return;
         }
         else
