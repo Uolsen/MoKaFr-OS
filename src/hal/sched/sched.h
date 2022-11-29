@@ -9,6 +9,7 @@
 #define LAST_TASK task[NR_TASKS-1]
 
 #define TASK_RUNNING				0
+#define TASK_ZOMBIE					1
 
 #include "lib.h"
 
@@ -38,6 +39,8 @@ struct task_struct {
 	int64_t counter;
 	int64_t priority;
 	int64_t preempt_count;
+	uint64_t stack;
+	uint64_t flags;
 };
 
 void sched_init(void);
@@ -47,6 +50,7 @@ void preempt_disable(void);
 void preempt_enable(void);
 void switch_to(struct task_struct* next);
 void cpu_switch_to(struct task_struct* prev, struct task_struct* next);
+extern void exit_process(void);
 
 #define INIT_TASK \
 /*cpu_context*/	{ {0,0,0,0,0,0,0,0,0,0,0,0,0}, \
