@@ -133,6 +133,11 @@ int printk(const char *format, int64_t data[])
     return buffer_size;
 }
 
+int printp(const char *format, int64_t param) {
+    int64_t params[] = {param};
+    printk(format, params);
+}
+
 int print(const char *format)
 {
     int64_t data[] = {-1};
