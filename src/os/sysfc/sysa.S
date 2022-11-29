@@ -1,4 +1,4 @@
-#include "sys.h"
+#include "sysfc/sys.h"
 
 .globl call_sys_write
 call_sys_write:
