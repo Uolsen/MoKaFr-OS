@@ -7,6 +7,7 @@
 #include "sysfc/fork.h"
 #include "interrupt/gic400.h"
 #include "sched/sched.h"
+#include "filesystem/fat.h"
 
 void user_process1(char *array)
 {
@@ -61,6 +62,25 @@ void main()
 {
     init_uart();
     fb_init();
+    fs_init();
+//    DEBUG_P("main used %u", fsget_node[1].used);
+
+
+    Node root = fs_get_node(1);
+    DEBUG_P("root used: %u", root.used);
+//    DEBUG_P("root page: %u", root.page);
+    Directory* rootDirectory = (Directory*) root.page;
+
+    for (unsigned int i = 0; i < 20; i++) {
+//        DEBUG_P("Index %u", i);
+//        DirectoryEntry entry = rootDirectory->entries[i];
+//        DEBUG_P("used: %u", rootDirectory->entries[i].used);
+        if (rootDirectory->entries[i].used) {
+            DEBUG_P("Name: %s", rootDirectory->entries[i].name);
+        }
+    }
+
+    DEBUG_E(0);
     init_interrupt_controller();
     // enable_interrupt_controller();
     enable_irq();
