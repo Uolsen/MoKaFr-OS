@@ -14,7 +14,8 @@
 		"intdef.h": "c",
 		"libc.h": "c",
 		"arm_timer.h": "c",
-		"gic400.h": "c"
+		"gic400.h": "c",
+		"sched.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "Enabled",
 	"C_Cpp.intelliSenseEngineFallback": "Disabled"

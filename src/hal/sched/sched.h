@@ -11,6 +11,8 @@
 #define TASK_RUNNING				0
 #define TASK_ZOMBIE					1
 
+#define PF_KTHREAD		            	0x00000002	
+
 #include "lib.h"
 
 extern struct task_struct *current;
@@ -54,7 +56,7 @@ extern void exit_process(void);
 
 #define INIT_TASK \
 /*cpu_context*/	{ {0,0,0,0,0,0,0,0,0,0,0,0,0}, \
-/* state etc */	0,0,1, 0 \
+/* state etc */	0,0,1, 0, 0, PF_KTHREAD \
 }
 
 #endif

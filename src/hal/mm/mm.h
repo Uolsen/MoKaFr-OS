@@ -8,7 +8,8 @@
 #define PAGE_SIZE   		(1 << PAGE_SHIFT)	
 #define SECTION_SIZE		(1 << SECTION_SHIFT)	
 
-#define LOW_MEMORY              (2 * SECTION_SIZE)
+// #define LOW_MEMORY              (2 * SECTION_SIZE)
+#define LOW_MEMORY              0x40000000
 #define HIGH_MEMORY             0xFE000000
 
 #define PAGING_MEMORY           (HIGH_MEMORY - LOW_MEMORY)
