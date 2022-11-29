@@ -2,7 +2,30 @@
 #include "timer/arm_timer.h"
 #include "uart/uart.h"
 #include "debug/debug.h"
+#include "sched/sched.h"
 #include "lib.h"
+
+const char *entry_error_messages[] = {
+	"SYNC_INVALID_EL1t",
+	"IRQ_INVALID_EL1t",		
+	"FIQ_INVALID_EL1t",		
+	"ERROR_INVALID_EL1T",		
+
+	"SYNC_INVALID_EL1h",		
+	"IRQ_INVALID_EL1h",		
+	"FIQ_INVALID_EL1h",		
+	"ERROR_INVALID_EL1h",		
+
+	"SYNC_INVALID_EL0_64",		
+	"IRQ_INVALID_EL0_64",		
+	"FIQ_INVALID_EL0_64",		
+	"ERROR_INVALID_EL0_64",	
+
+	"SYNC_INVALID_EL0_32",		
+	"IRQ_INVALID_EL0_32",		
+	"FIQ_INVALID_EL0_32",		
+	"ERROR_INVALID_EL0_32"	
+};
 
 void init_interrupt_controller(void)
 {
@@ -33,45 +56,30 @@ static uint32_t get_irq_number(void)
     return mmio_read(ICC_ACK);
 }
 
-void handler(uint64_t numid, uint64_t esr, uint64_t elr)
+void show_invalid_entry_message(int type, unsigned long esr, unsigned long address)
 {
-    // uint32_t irq = get_irq_number();
-    uint32_t irq;
+	DEBUG_P("%s, ", entry_error_messages[type]);
+	DEBUG_P("ESR: %x, ", esr);
+	DEBUG_P("address: %x\r\n", address);
+}
 
-	// int64_t data[] = {irq, numid};
+void handle(void)
+{
+    uint32_t irq = get_irq_number();
 
-	DEBUG_P("handler() numid: %u", numid);
+    DEBUG_P("handler() irq: %u", irq);
 
-    switch (numid) {
-        case 1:
-            // printk("sync error at %x: %x\r\n", elr, esr);
-            DEBUG_P("handler() esr: %u", esr);
-            DEBUG_P("handler() elr: %u", elr);
-            while (1) { }
-            break;
-
-        case 2:
-            irq = get_irq_number();
-
-            DEBUG_P("handler() irq: %u", irq);
-
-            if (irq == 64) {
-                timer_interrupt_handler();
-                // init_timer();
-            }
-            else if (irq == 96 + 57) {
-                uart_handler();
-            }
-            else {
-                DEBUG_F("unknown irq\r\n");
-                while (1) { }
-            }
-
-            mmio_write(ICC_EOI, irq);
-            break;    
-
-        default:
-            // printk("unknown exception\r\n");
-            while (1) { }
+    if (irq == 64) {
+        timer_interrupt_handler();
+        // init_timer();
     }
+    else if (irq == 96 + 57) {
+        uart_handler();
+    }
+    else {
+        DEBUG_F("unknown irq\r\n");
+        while (1) { }
+    }
+
+    mmio_write(ICC_EOI, irq);
 }

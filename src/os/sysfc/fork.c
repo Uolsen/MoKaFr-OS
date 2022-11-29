@@ -1,7 +1,7 @@
 #include "sysfc/fork.h"
 #include "mm/mm.h"
 #include "sched/sched.h"
-// #include "entry.h"
+#include "interrupt/entry.h"
 #include "lib.h"
 
 uint32_t copy_process(uint64_t fn, uint64_t arg)

@@ -48,8 +48,9 @@ el1_entry:
     sub     w2, w2, #1
     cbnz    w2, 3b               // Loop if non-zero
 
-    ldr x0, =vector_table
-    msr vbar_el1, x0
+    //ldr x0, =vector_table
+    //msr vbar_el1, x0
+    bl irq_vector_init
 
     // Jump to our main() routine in C (make sure it doesn't return)
 4:  bl      main

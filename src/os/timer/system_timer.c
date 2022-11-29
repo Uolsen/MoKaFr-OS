@@ -1,14 +1,22 @@
 #include "timer/system_timer.h"
 #include "lib.h"
+#include "sched/sched.h"
 #include "print/print.h"
 
-void system_timer_init(){
-	mmio_write(SYS_TIMER_CS, 0);
-	uint32_t currVal = mmio_read(SYS_TIMER_CLO);
+const unsigned int interval = 200000;
+unsigned int curVal = 0;
 
-	// mmio_write(SYS_TIMER_C3, currVal + 4000000000);
-	mmio_write(SYS_TIMER_C3, currVal + 200000);
+void system_timer_init ( void )
+{
+	curVal = mmio_read(TIMER_CLO);
+	curVal += interval;
+	mmio_write(TIMER_C1, curVal);
+}
 
-	int64_t data[] = {currVal};
-	printk("Timer value: %u\n", data);
+void handle_timer_irq( void ) 
+{
+	curVal += interval;
+	mmio_write(TIMER_C1, curVal);
+	mmio_write(TIMER_CS, TIMER_CS_M1);
+	timer_tick();
 }

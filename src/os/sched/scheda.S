@@ -28,6 +28,5 @@ cpu_switch_to:
 	mov	sp, x9
 
 	// Instrukce na to abych nebyl v IRQ
-	
 
-	eret
+	ret

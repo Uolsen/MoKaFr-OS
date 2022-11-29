@@ -3,6 +3,7 @@
 #include "lib.h"
 #include "debug/debug.h"
 #include "timer/arm_timer.h"
+#include "timer/system_timer.h"
 #include "sysfc/fork.h"
 #include "interrupt/gic400.h"
 
@@ -21,12 +22,14 @@ void main()
     init_uart();
     fb_init();
     init_interrupt_controller();
+    // enable_interrupt_controller();
     enable_irq();
     print("Hello, Raspberry pi\r\n");
     int64_t params[] = {(uint64_t)get_el()};
     printk("We are at EL %u\r\n", params);
 
     init_timer();
+    // system_timer_init();
     DEBUG_F("init_timer();");
 
     uint32_t res = copy_process((uint64_t)&process, (uint64_t)"12345");
