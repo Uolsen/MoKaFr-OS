@@ -44,8 +44,8 @@ void _schedule(void)
 			}
 		}
 	}
-	switch_to(task[next]);
 	preempt_enable();
+	switch_to(task[next]);
 }
 
 void schedule(void)
@@ -79,9 +79,9 @@ void timer_tick()
 		return;
 	}
 	current->counter=0;
-	enable_irq();
-	_schedule();
 	// disable_irq();
+	_schedule();
+	// enable_irq();
 }
 
 void exit_process(){
