@@ -24,9 +24,9 @@ void timer_interrupt_handler(void)
 
     if (mask & 1) {
         DEBUG_F("timer_interrupt_handler MASK");
-        // timer_tick();
-
         mmio_write(ARM_TIMER_IRQCNTL, 1);
+
+        timer_tick();
     }
 
     // init_timer();

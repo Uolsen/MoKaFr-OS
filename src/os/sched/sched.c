@@ -64,7 +64,7 @@ void switch_to(struct task_struct * next)
 	DEBUG_P("switch_to prev: %u", prev);
 	DEBUG_P("switch_to next: %u", next);
 	cpu_switch_to(prev, next);
-	DEBUG_F("switch_to AFTER");
+	// DEBUG_F("switch_to AFTER");
 }
 
 void schedule_tail(void) {
@@ -81,8 +81,7 @@ void timer_tick()
 	current->counter=0;
 	enable_irq();
 	_schedule();
-	disable_irq();
-	
+	// disable_irq();
 }
 
 void exit_process(){

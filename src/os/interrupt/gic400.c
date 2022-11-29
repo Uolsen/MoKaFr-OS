@@ -69,6 +69,8 @@ void handle(void)
 
     DEBUG_P("handler() irq: %u", irq);
 
+    mmio_write(ICC_EOI, irq);
+
     if (irq == 64) {
         timer_interrupt_handler();
         // init_timer();
@@ -81,5 +83,5 @@ void handle(void)
         while (1) { }
     }
 
-    mmio_write(ICC_EOI, irq);
+    // mmio_write(ICC_EOI, irq);
 }
