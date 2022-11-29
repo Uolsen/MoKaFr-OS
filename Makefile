@@ -19,6 +19,9 @@ src/os/interrupt/entry.o: src/os/interrupt/entry.S
 src/os/sched/scheda.o: src/os/sched/scheda.S
 	$(ARMGNU)-gcc $(GCCFLAGS) -c src/os/sched/scheda.S -o src/os/sched/scheda.o
 
+src/os/sysfc/sysa.o: src/os/sysfc/sysa.S
+	$(ARMGNU)-gcc $(GCCFLAGS) -c src/os/sysfc/sysa.S -o src/os/sysfc/sysa.o
+
 src/os/mm/mma.o: src/os/mm/mma.S
 	$(ARMGNU)-gcc $(GCCFLAGS) -c src/os/mm/mma.S -o src/os/mm/mma.o
 
@@ -28,8 +31,8 @@ src/os/liba.o: src/os/liba.s
 %.o: %.c
 	$(ARMGNU)-gcc $(GCCFLAGS) -c $< -o $@
 
-kernel8.img: src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o src/os/mm/mma.o $(OFILES) firmware/BCM4345C0.o
-	$(ARMGNU)-ld -M -nostdlib src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o src/os/mm/mma.o $(OFILES) firmware/BCM4345C0.o -T link.ld -o build/kernel8.elf > build/link.ld.out
+kernel8.img: src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o  src/os/sysfc/sysa.o src/os/mm/mma.o $(OFILES) firmware/BCM4345C0.o
+	$(ARMGNU)-ld -M -nostdlib src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o  src/os/sysfc/sysa.o src/os/mm/mma.o $(OFILES) firmware/BCM4345C0.o -T link.ld -o build/kernel8.elf > build/link.ld.out
 	$(ARMGNU)-objcopy --srec-forceS3 build/kernel8.elf -O srec build/kernel8.srec
 	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
 	$(ARMGNU)-objdump -l -S -D build/kernel8.elf > build/kernel8.dump
