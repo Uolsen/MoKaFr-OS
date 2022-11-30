@@ -94,6 +94,14 @@ void main()
             DEBUG_P("Name: %s", rootDirectory->entries[i].name);
         }
     }
+    Node node = fs_get_node(rootDirectory->entries[5].node_id);
+    Directory * nodeDirectory = (Directory*) node.page;
+    fs_create_file(node, "test2");
+    for (uint32_t i = 0; i < 20; i++) {
+        if (nodeDirectory->entries[i].used) {
+            DEBUG_P("Name: %s", nodeDirectory->entries[i].name);
+        }
+    }
 
     init_interrupt_controller();
     // enable_interrupt_controller();

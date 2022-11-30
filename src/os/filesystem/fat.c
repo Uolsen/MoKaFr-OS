@@ -36,46 +36,94 @@ uint32_t fs_create_node() {
     return node_id;
 }
 
-void fs_add_directory_entry(Directory* directory, uint8_t is_directory, uint8_t* name) {
-    DirectoryEntry entry;
-    entry.is_directory = is_directory;
-//    strncpy(*entry.name, name, strlen(name));
-//    entry.name = name;
+Directory * fs_node_get_directory(Node node) {
+    return (Directory *) node.page;
+}
 
-    DEBUG_P("name: %s", name);
-    uint32_t i;
-//    for (i = 0; i < 32; i++) {
-//        if (name[i] != '\0') {
-//            entry.name[i] = name[i];
-//        } else {
-//            entry.name[i] = '\0';
-//        }
-//    }
+File * fs_node_get_file(Node node) {
+    return (File *) node.page;
+}
 
-
-    entry.node = fs_create_node();
-    entry.name = name;
-    entry.used = 1;
-
-
-    for (i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
+DirectoryEntry * fs_add_directory_entry_with_link(Directory * directory, uint8_t * name, uint32_t target_id) {
+    DirectoryEntry * entry;
+    for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
         if (!directory->entries[i].used) {
-            DEBUG_F("Writing an entry");
-            directory->entries[i] = entry;
+//            DEBUG_F("Writing an entry");
+//            directory->entries[i] = entry;
+            entry = &directory->entries[i];
             break;
         }
     }
 
+    entry->is_directory = 1;
+    entry->node_id = target_id;
+    entry->name = name;
+    entry->used = 1;
+
+
+    return entry;
 }
 
+DirectoryEntry * fs_add_directory_entry(Directory* directory, uint8_t is_directory, uint8_t* name) {
+    DirectoryEntry * entry;
+    for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
+        if (!directory->entries[i].used) {
+            entry = &directory->entries[i];
+            break;
+        }
+    }
+
+
+    entry->is_directory = is_directory;
+    entry->node_id = fs_create_node();
+    entry->name = name;
+    entry->used = 1;
+
+    return entry;
+}
+
+void fs_create_file(Node parent, uint8_t* name) {
+    // Cast node to Directory
+    Directory* parentDirectory = (Directory*) parent.page;
+
+    fs_add_directory_entry(parentDirectory, 0, name);
+    // create file node
+    // create directory entry for parent
+    // associate node with entry
+}
+
+void fs_create_directory(Node parent, uint8_t* name) {
+    // Cast node to Directory
+    Directory* parentDirectory = (Directory*) parent.page;
+
+    // create directory node
+    DirectoryEntry * entry = fs_add_directory_entry(parentDirectory, 1, name);
+    Directory * directory = (Directory *) fs_get_node(entry->node_id).page;
+
+    // create directory entry for parent
+    fs_add_directory_entry_with_link(directory, ".", entry->node_id);
+    fs_add_directory_entry_with_link(directory, "..", parent.id);
+
+    // create entries for current / parent
+    // associate node with entry
+}
+
+void fs_clear() {
+    for (uint32_t i = 0; i < FILESYSTEM_SIZE; i++) {
+        file_system[i].used = 0;
+    }
+}
 
 void fs_init() {
     DEBUG_F("Initializing FS...");
+    fs_clear();
 
     uint32_t id = fs_create_node();
 
-    Node * root = &file_system[id];
-    Directory* rootDirectory = (Directory*) root->page;
+    Node root = file_system[id];
+    Directory* rootDirectory = (Directory*) root.page;
+    fs_add_directory_entry_with_link(rootDirectory, ".", rootDirectory);
+    fs_add_directory_entry_with_link(rootDirectory, "..", rootDirectory);
     fs_add_directory_entry(rootDirectory, 1, "sys");
     fs_add_directory_entry(rootDirectory, 1, "dev");
     fs_add_directory_entry(rootDirectory, 1, "mnt");
