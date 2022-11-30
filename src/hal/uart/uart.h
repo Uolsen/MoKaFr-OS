@@ -31,7 +31,7 @@
 
 #define MAX_BUFFER_SIZE	64
 
-uint8_t * get_buffer();
+void get_buffer(uint8_t * str);
 unsigned char read_char(void);
 void write_char(unsigned char c);
 void write_string(const char *string);

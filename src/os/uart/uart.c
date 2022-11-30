@@ -23,15 +23,15 @@ void load_char(unsigned char c)
     buff_len++;
 }
 
-uint8_t * get_buffer(){
-    uint8_t * buffer_ret;
-    // strncpy(buffer_ret, buffer, MAX_BUFFER_SIZE);
-    // for (uint32_t i = 0; i < MAX_BUFFER_SIZE; i++)
-    // {
-    //     buffer[i] = 0x0;
-    // }
+void get_buffer(uint8_t * str){
+    strncpy(str, buffer, MAX_BUFFER_SIZE);
+    for (uint32_t i = 0; i < MAX_BUFFER_SIZE; i++)
+    {
+        buffer[i] = '\0';
+    }
+    buff_len = 0;
     
-    return buffer;
+    DEBUG_P("BUFFER: %s", str);
 }
 
 void write_char(unsigned char c)
