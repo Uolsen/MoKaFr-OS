@@ -2,7 +2,7 @@
 #include "sysfc/sys.h"
 #include "print/print.h"
 #include "uart/uart.h"
-#include "sys/string.h"
+#include "stdlib/stdstring.h"
 
 static uint8_t * input[MAX_BUFFER_SIZE];
 

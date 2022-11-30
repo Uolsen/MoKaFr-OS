@@ -18,6 +18,7 @@ static uint8_t buffer[MAX_BUFFER_SIZE];
 static uint32_t buff_len = 0;
 
 void load_char(unsigned char c)
+
 {
     buffer[buff_len] = c;
     buff_len++;
