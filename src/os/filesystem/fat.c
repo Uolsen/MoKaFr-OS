@@ -10,6 +10,7 @@ Node fs_get_node(uint32_t id) {
 
 uint32_t get_free_node_id() {
     for (uint32_t i = 1; i < FILESYSTEM_SIZE; i++) {
+        DEBUG_P("Free Node ID: %u", i);
         if (!file_system[i].used) {
             return i;
         }
@@ -30,6 +31,7 @@ uint32_t fs_create_node() {
     node.used = 1;
     node.next = 0;
     node.page = get_free_page();
+    node.id = node_id;
 
     file_system[node_id] = node;
 
@@ -127,61 +129,6 @@ void fs_init() {
     fs_add_directory_entry(rootDirectory, 1, "sys");
     fs_add_directory_entry(rootDirectory, 1, "dev");
     fs_add_directory_entry(rootDirectory, 1, "mnt");
-
-
-//    Node root;
-//    root.used = 1;
-//    root.next = 0;
-//    root.page = get_free_page();
-//    file_system[1] = root;
-//
-//    Node sysNode;
-//    sysNode.used = 1;
-//    sysNode.next = 0;
-//    sysNode.page = get_free_page();
-//
-//    DirectoryEntry sys;
-//    sys.is_directory = 1;
-//    sys.name = "sys";
-//    sys.node_id =
-//
-//            DirectoryEntry
-//    testFileEntry;
-//    testFileEntry.is_directory = 0;
-//    testFileEntry.name = "test";
-//    testFileEntry.node_id = 2;
-//
-//    Node testFileNode;
-//    testFileNode.used = 1;
-//    testFileNode.next = 0;
-//    testFileNode.page = get_free_page();
-//
-//    file_system[2] = testFileNode;
-//
-//    Directory rootDirectory = (struct Directory *) *root.page;
-//    rootDirectory.entries[0] = testFileEntry;
-//    rootDirectory.entries[1] = sys;
-//
-//    root.entries[0].name
-
-
-//    DirectoryEntry dev;
-//    sys.name = "dev";
-//
-//    DirectoryEntry mnt;
-//    sys.name = "mnt";
-
-
-    // Calculate Filesystem size
-
-//    Directory root;
-//    root.entries[0] = dev;
-//    root.entries[1] = mnt;
-//    root.entries[2] = sys;
-    // Define ROOT directory
-    // Define SYS directory
-    // Define MNT directory
-    // Define DEV directory
 
 }
 

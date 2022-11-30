@@ -32,8 +32,11 @@ typedef struct File {
 
 uint32_t get_free_node_id();
 uint32_t fs_create_node();
-void fs_add_directory_entry(Directory* directory, uint8_t is_directory, uint8_t* name);
+void fs_create_directory(Node parent, uint8_t* name);
+void fs_create_file(Node parent, uint8_t* name);
 Node fs_get_node(uint32_t id);
+Directory * fs_node_get_directory(Node node);
+File * fs_node_get_file(Node node);
 
 void fs_init();
 
