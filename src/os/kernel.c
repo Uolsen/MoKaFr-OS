@@ -95,7 +95,6 @@ void main()
         }
     }
 
-    DEBUG_E(0);
     init_interrupt_controller();
     // enable_interrupt_controller();
     enable_irq();
