@@ -67,7 +67,7 @@ void handle(void)
 {
     uint32_t irq = get_irq_number();
 
-    DEBUG_P("handler() irq: %u", irq);
+    // DEBUG_P("handler() irq: %u", irq);
 
     mmio_write(ICC_EOI, irq);
 

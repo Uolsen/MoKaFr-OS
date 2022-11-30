@@ -3,6 +3,8 @@
 #include "uart/uart.h"
 #include "sched/sched.h"
 #include "lib.h"
+#include "debug/debug.h"
+#include "stdlib/stdstring.h"
 
 int length = 0;
 int rows = 0;
@@ -12,12 +14,32 @@ int x_base = 50;
 int y_base = 60;
 int crln = 0;
 
+static uint8_t buffer[MAX_BUFFER_SIZE];
+static uint32_t buff_len = 0;
+
+void load_char(unsigned char c)
+{
+    buffer[buff_len] = c;
+    buff_len++;
+}
+
+uint8_t * get_buffer(){
+    uint8_t * buffer_ret;
+    // strncpy(buffer_ret, buffer, MAX_BUFFER_SIZE);
+    // for (uint32_t i = 0; i < MAX_BUFFER_SIZE; i++)
+    // {
+    //     buffer[i] = 0x0;
+    // }
+    
+    return buffer;
+}
+
 void write_char(unsigned char c)
 {
-    while (in_word(UART0_FR) & (1 << 3))
+    while (mmio_read(UART0_FR) & (1 << 3))
     {
     }
-    out_word(UART0_DR, c);
+    mmio_write(UART0_DR, c);
 
     // Draw on screen
     int x = x_base + (length * font_width);
@@ -87,7 +109,8 @@ void uart_handler(void)
         }
         else
         {
-            write_char(ch);
+            // write_char(ch);
+            load_char(ch);
         }
 
         out_word(UART0_ICR, (1 << 4));
