@@ -71,8 +71,8 @@ void main()
 
     for (uint32_t i = 0; i < 20; i++) {
         if (rootDirectory->entries[i].used) {
-            //DEBUG_P("Name: %s", rootDirectory->entries[i].name);
-            DEBUG_P("Name %u", i);
+            DEBUG_P("Name: %s", rootDirectory->entries[i].name);
+//            DEBUG_P("Name %u", i);
         }
     }
     Node node = fs_get_node(rootDirectory->entries[5].node_id);
@@ -80,8 +80,8 @@ void main()
     fs_create_file(node, "test2");
     for (uint32_t i = 0; i < 20; i++) {
         if (nodeDirectory->entries[i].used) {
-            //DEBUG_P("Name: %s", nodeDirectory->entries[i].name);
-            DEBUG_P("Name2 %u", i);
+            DEBUG_P("Name2: %s", nodeDirectory->entries[i].name);
+//            DEBUG_P("Name2 %u", i);
 
         }
     }
