@@ -1,0 +1,47 @@
+Platforma: ARMv8 - Raspberry Pi 4B
+
+Základ systému:
+- subsystém přerušení
+- správa kernelové paměti (kernel heap)
+- správa virtuální paměti (stránkování)
+- správa procesů (uživatelských a systémových)
+- izolace uživatelských procesů, relokace do vlastního adresního prostoru
+- ochrana systémových prostředků a periferií (nelze např. zapsat do registru periferie přímo z kódu uživ. procesu)
+- souborový systém (obecný mechanismus)
+  - virtuální adresáře a soubory pro mapování periferií
+  - jednoduchý filesystém, stačí in-memory, nemusí podporovat ani adresáře
+- prostředky pro synchronizaci procesů (alespoň roura)
+
+Ovladače:
+- GPIO vč. přerušení
+- UART obousměrný (čtení i zápis)
+- generátor náhodných čísel (TRNG, "skutečná náhoda")
+- Bluetooth (classic nebo BLE, dle uvážení)
+- displej (HDMI nebo DSI, dle uvážení) a základní výstup
+
+Uživatelské procesy:
+- konzole
+  - diagnostické vstupy a výstupy
+  - můžu se např. podívat, jak dlouho systém běží (klidně abstraktní jednotky jako cykly nebo tiky plánovače, není třeba vteřiny), popř. co shledáte za vhodné
+  - můžu nastavit, co se na displeji bude ukazovat (pokud tam máte např. čas/datum a nějaký string, tak třeba formát času/data a ten string)
+    - sám nevykonává displejovou funkci, posílá data v příkazech do řídicího procesu (níže)
+- Bluetooth komunikátor
+  - čistě funkční věci
+  - můžu nastavit obsah displeje jako z konzole
+    - sám nevykonává displejovou funkci, posílá data v příkazech do řídicího procesu (níže)
+- řídicí proces
+  - přes pipe nebo jiný mechanismus přebírá data od konzole a Bluetooth komunikátoru
+  - nastavuje obsah displeje dle nastavení
+
+Podpůrná knihovna ("něco jako stdlib"):
+- souborová komunikace (mj. i UART)
+- Bluetooth komunikace
+- podpora komunikace s displejem (stačí podobný protokol, jako budeme dělat na cvičení, zjednodušený/rozšířený pro Vaše potřeby)
+
+Dokumentace
+- stručný popis platformy
+  - registry, paměťový layout
+- aplikační doména ("chytré zrcadlo" - motivace a očekávání)
+- popis OS a jeho implementace a myšlenek
+- popis nahrávání do RPi4
+- hlavní problémy při implementaci (co bylo potřeba výrazně upravit proti cvičení, nebo co se na cviku vůbec nedělalo)
