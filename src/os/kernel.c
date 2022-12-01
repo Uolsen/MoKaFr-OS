@@ -41,26 +41,41 @@ void user_process(){
     // printp("Moved to EL %u\r\n", (uint64_t)get_el());
 	print(buf);
 	call_sys_write(buf);
-	unsigned long stack = call_sys_malloc();
-	if (stack < 0) {
-		print("Error while allocating stack for process 1\n\r");
-		return;
-	}
-	int err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"12345", stack);
-	if (err < 0){
-		print("Error while clonning process 1\n\r");
-		return;
-	} 
-	stack = call_sys_malloc();
-	if (stack < 0) {
-		print("Error while allocating stack for process 1\n\r");
-		return;
-	}
-	err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"abcd", stack);
-	if (err < 0){
-		print("Error while clonning process 2\n\r");
-		return;
-	} 
+
+    register_process((unsigned long)&terminal_main);
+//    register_process((unsigned long)mkdir);
+
+//    unsigned long stack = call_sys_malloc();
+//    if (stack < 0) {
+//        print("Error while allocating stack for process 1\n\r");
+//        return;
+//    }
+//    int err = call_sys_clone((unsigned long)&terminal_main, (unsigned long)"", stack);
+//    if (err < 0){
+//        print("Error while clonning process 1\n\r");
+//        return;
+//    }
+
+//	unsigned long stack = call_sys_malloc();
+//	if (stack < 0) {
+//		print("Error while allocating stack for process 1\n\r");
+//		return;
+//	}
+//	int err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"12345", stack);
+//	if (err < 0){
+//		print("Error while clonning process 1\n\r");
+//		return;
+//	}
+//	stack = call_sys_malloc();
+//	if (stack < 0) {
+//		print("Error while allocating stack for process 1\n\r");
+//		return;
+//	}
+//	err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"abcd", stack);
+//	if (err < 0){
+//		print("Error while clonning process 2\n\r");
+//		return;
+//	}
 	call_sys_exit();
 }
 
