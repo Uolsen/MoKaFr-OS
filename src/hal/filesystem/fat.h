@@ -40,6 +40,5 @@ File * fs_node_get_file(Node node);
 
 void fs_init();
 
-void fopen();
 
 #endif //MOKAFR_FAT_H
