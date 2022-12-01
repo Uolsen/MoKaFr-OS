@@ -5,12 +5,9 @@
 #include "timer/arm_timer.h"
 #include "timer/system_timer.h"
 #include "sysfc/fork.h"
-#include "sysfc/sys.h"
 #include "interrupt/gic400.h"
 #include "sched/sched.h"
 #include "filesystem/fat.h"
-
-#include "user/terminal.h"
 
 void user_process1(char *array)
 {
@@ -18,7 +15,7 @@ void user_process1(char *array)
 	while (1){
 		for (int i = 0; i < 5; i++){
 			buf[0] = array[i];
-			print(buf);
+			call_sys_write(buf);
 			delay(100000);
 		}
 	}
@@ -27,41 +24,29 @@ void user_process1(char *array)
 void user_process(){
 	char buf[30] = {0};
 	print("User process started\n\r");
-    // printp("Moved to EL %u\r\n", (uint64_t)call_sys_get_el());
+    // printp("Moved to EL %u\r\n", (uint64_t)get_el());
 	print(buf);
 	call_sys_write(buf);
-
-    unsigned long stack = call_sys_malloc();
+	unsigned long stack = call_sys_malloc();
 	if (stack < 0) {
 		print("Error while allocating stack for process 1\n\r");
 		return;
-	}	
-    int err = call_sys_clone((unsigned long)&terminal_main, (unsigned long)"", stack);
+	}
+	int err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"12345", stack);
 	if (err < 0){
 		print("Error while clonning process 1\n\r");
 		return;
 	} 
-
-	// unsigned long stack = call_sys_malloc();
-	// if (stack < 0) {
-	// 	print("Error while allocating stack for process 1\n\r");
-	// 	return;
-	// }
-	// int err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"12345", stack);
-	// if (err < 0){
-	// 	print("Error while clonning process 1\n\r");
-	// 	return;
-	// } 
-	// stack = call_sys_malloc();
-	// if (stack < 0) {
-	// 	print("Error while allocating stack for process 1\n\r");
-	// 	return;
-	// }
-	// err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"abcd", stack);
-	// if (err < 0){
-	// 	print("Error while clonning process 2\n\r");
-	// 	return;
-	// } 
+	stack = call_sys_malloc();
+	if (stack < 0) {
+		print("Error while allocating stack for process 1\n\r");
+		return;
+	}
+	err = call_sys_clone((unsigned long)&user_process1, (unsigned long)"abcd", stack);
+	if (err < 0){
+		print("Error while clonning process 2\n\r");
+		return;
+	} 
 	call_sys_exit();
 }
 
@@ -78,20 +63,26 @@ void main()
     init_uart();
     fb_init();
     fs_init();
-//    DEBUG_P("main used %u", fsget_node[1].used);
-
 
     Node root = fs_get_node(1);
-    DEBUG_P("root used: %u", root.used);
-//    DEBUG_P("root page: %u", root.page);
     Directory* rootDirectory = (Directory*) root.page;
+    fs_create_directory(root, "test");
+    rootDirectory->entries[5].node_id;
 
-    for (unsigned int i = 0; i < 20; i++) {
-//        DEBUG_P("Index %u", i);
-//        DirectoryEntry entry = rootDirectory->entries[i];
-//        DEBUG_P("used: %u", rootDirectory->entries[i].used);
+    for (uint32_t i = 0; i < 20; i++) {
         if (rootDirectory->entries[i].used) {
-            DEBUG_P("Name: %s", rootDirectory->entries[i].name);
+            //DEBUG_P("Name: %s", rootDirectory->entries[i].name);
+            DEBUG_P("Name %u", i);
+        }
+    }
+    Node node = fs_get_node(rootDirectory->entries[5].node_id);
+    Directory * nodeDirectory = (Directory*) node.page;
+    fs_create_file(node, "test2");
+    for (uint32_t i = 0; i < 20; i++) {
+        if (nodeDirectory->entries[i].used) {
+            //DEBUG_P("Name: %s", nodeDirectory->entries[i].name);
+            DEBUG_P("Name2 %u", i);
+
         }
     }
 
