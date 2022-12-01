@@ -4,6 +4,8 @@
 #include "uart/uart.h"
 #include "stdlib/stdstring.h"
 #include "debug/debug.h"
+#include "rng/prng.h"
+#include "sysproc/sysinfo.h"
 
 static uint8_t input[MAX_BUFFER_SIZE];
 
@@ -52,12 +54,21 @@ void terminal_reading()
 			// work with input
 			printp("WORKING WITH: %s", input);
 
+			programms(input);
+
 			terminal_clear();
 		}
 	}
 
-	 delay(10000);
-//	delay(1000000000);
+	delay(10000);
+}
+
+void programms(char * input){
+	if (strncmp("ticks", input, strlen("ticks")) == 0){
+		printp("Ticks: %u", sysinfo_get_ticks());
+	} else if (strncmp("rand", input, strlen("rand")) == 0){
+		printp("Random number: %u", prng_get());
+	}
 }
 
 void terminal_clear()

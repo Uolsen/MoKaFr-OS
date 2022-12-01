@@ -9,6 +9,7 @@
 #include "sched/sched.h"
 #include "filesystem/fat.h"
 #include "user/terminal.h"
+#include "sysproc/sysinfo.h"
 
 static uint8_t path[1024];
 
@@ -45,6 +46,7 @@ void user_process(){
 	call_sys_write(buf);
 
     register_process((unsigned long)&terminal_main);
+    register_process((unsigned long)&sysinfo_main);
 //    register_process((unsigned long)mkdir);
 
 //    unsigned long stack = call_sys_malloc();

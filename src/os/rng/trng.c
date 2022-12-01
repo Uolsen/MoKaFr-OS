@@ -1,4 +1,4 @@
-#include "random_generator/trng.h"
+#include "rng/trng.h"
 #include "print/print.h"
 #include "debug/debug.h"
 
