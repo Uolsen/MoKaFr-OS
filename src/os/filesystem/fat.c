@@ -28,7 +28,7 @@ uint32_t fs_create_node() {
 
     Node node;
     node.used = 1;
-    node.next = 0;
+//    node.next = 0;
     node.page = get_free_page();
     node.id = node_id;
 
@@ -39,16 +39,40 @@ uint32_t fs_create_node() {
     return node_id;
 }
 
-Directory * fs_node_get_directory(Node node) {
+Directory *fs_node_get_directory(Node node) {
     return (Directory *) node.page;
 }
 
-File * fs_node_get_file(Node node) {
+File *fs_node_get_file(Node node) {
     return (File *) node.page;
 }
 
-DirectoryEntry * fs_add_directory_entry_with_link(Directory * directory, uint8_t * name, uint32_t target_id) {
-    DirectoryEntry * entry;
+char *fs_get_path(Node node) {
+    // Get current node
+    if (node.id == 1) {
+        return "/";
+    }
+
+    char path[1024];
+    char path_reversed[1024];
+
+    while (node.id != 1) {
+        Directory *directory = fs_node_get_directory(node);
+
+        DirectoryEntry * entry = fs_get_parent_directory_entry(directory);
+    //    straddtostart(path_reversed, entry->name, strlen(entry->name));
+
+        node = fs_get_node(entry->node_id);
+    }
+
+    return path_reversed;
+
+    // Cast node.page -> directory -> get entries -> get .. (ID 1)
+    // Repeat
+}
+
+DirectoryEntry *fs_add_directory_entry_with_link(Directory *directory, uint8_t *name, uint32_t target_id) {
+    DirectoryEntry *entry;
 
     for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
         if (!directory->entries[i].used) {
@@ -65,8 +89,8 @@ DirectoryEntry * fs_add_directory_entry_with_link(Directory * directory, uint8_t
     return entry;
 }
 
-DirectoryEntry * fs_add_directory_entry(Directory* directory, uint8_t is_directory, uint8_t* name) {
-    DirectoryEntry * entry;
+DirectoryEntry *fs_add_directory_entry(Directory *directory, uint8_t is_directory, uint8_t *name) {
+    DirectoryEntry *entry;
     for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
         if (!directory->entries[i].used) {
             entry = &directory->entries[i];
@@ -83,9 +107,9 @@ DirectoryEntry * fs_add_directory_entry(Directory* directory, uint8_t is_directo
     return entry;
 }
 
-void fs_create_file(Node parent, uint8_t* name) {
+void fs_create_file(Node parent, uint8_t *name) {
     // Cast node to Directory
-    Directory* parentDirectory = (Directory*) parent.page;
+    Directory *parentDirectory = (Directory *) parent.page;
 
     fs_add_directory_entry(parentDirectory, 0, name);
     // create file node
@@ -93,13 +117,13 @@ void fs_create_file(Node parent, uint8_t* name) {
     // associate node with entry
 }
 
-void fs_create_directory(Node parent, uint8_t* name) {
+void fs_create_directory(Node parent, uint8_t *name) {
     // Cast node to Directory
-    Directory* parentDirectory = (Directory*) parent.page;
+    Directory *parentDirectory = (Directory *) parent.page;
 
     // create directory node
-    DirectoryEntry * entry = fs_add_directory_entry(parentDirectory, 1, name);
-    Directory * directory = (Directory *) fs_get_node(entry->node_id).page;
+    DirectoryEntry *entry = fs_add_directory_entry(parentDirectory, 1, name);
+    Directory *directory = (Directory *) fs_get_node(entry->node_id).page;
 
     // create directory entry for parent
     fs_add_directory_entry_with_link(directory, ".", entry->node_id);
@@ -107,6 +131,22 @@ void fs_create_directory(Node parent, uint8_t* name) {
 
     // create entries for current / parent
     // associate node with entry
+}
+
+DirectoryEntry *fs_get_directory_entry(Directory *directory, uint8_t *name) {
+    for (int i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
+        if (strncmp(directory->entries[i].name, name, strlen(name))) {
+            return &directory->entries[i];
+        }
+    }
+}
+
+DirectoryEntry *fs_get_parent_directory_entry(Directory *directory) {
+    return fs_get_directory_entry(directory, "..");
+}
+
+DirectoryEntry *fs_get_current_directory_entry(Directory *directory) {
+    return fs_get_directory_entry(directory, ".");
 }
 
 void fs_clear() {
@@ -122,7 +162,7 @@ void fs_init() {
     uint32_t id = fs_create_node();
 
     Node root = file_system[id];
-    Directory* rootDirectory = (Directory*) root.page;
+    Directory *rootDirectory = (Directory *) root.page;
     fs_add_directory_entry_with_link(rootDirectory, ".", rootDirectory);
     fs_add_directory_entry_with_link(rootDirectory, "..", rootDirectory);
     fs_add_directory_entry(rootDirectory, 1, "sys");

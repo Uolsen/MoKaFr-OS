@@ -100,6 +100,35 @@ int strlen(const char* s) {
     return i;
 }
 
+void stradd2(char* src, char* dest) {
+//    int j = 0;
+    for (int i = strlen(dest), j = 0; j < strlen(src); j++, i++) {
+        dest[i] = src[j];
+    }
+
+//    return dest;
+}
+
+// add to begin of dest string src
+void straddtostart(char *src, char * target) {
+
+    // /root/home/admin
+    // ""
+    // admin
+    // home
+    // root
+    // stradd2("", "admin") => /admin
+    //stradd2("admin", "home") => /home/admin
+    //stradd2("home/admin", "root") => root/home/admnin
+
+    stradd2(target, src);
+
+//    char temp[1024];
+//    strncpy(temp, target, strlen(temp));
+//    stradd2(temp, src);
+//    stradd2(target, src);
+}
+
 // vynulovani pameti
 void bzero(void* memory, int length) {
     char* mem = (char*)(memory);

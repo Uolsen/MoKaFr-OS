@@ -10,6 +10,8 @@
 #include "filesystem/fat.h"
 #include "user/terminal.h"
 
+static uint8_t path[1024];
+
 void user_process1(char *array)
 {
 	char buf[2] = {0};
@@ -93,7 +95,29 @@ void main()
     fb_init();
     fs_init();
 
+
     Node root = fs_get_node(1);
+
+
+
+    stradd2(path, "admin"); //=> /admin
+    stradd2(path, "home"); //=> /home/admin
+    stradd2(path, "root"); //=> root/home/admnin
+
+//    char *s = straddtostart("/admin", "home", ch);
+//    char *x = straddtostart(s, "root", path[1024]);
+//    stradd2("admin", "/", path);
+    // path = admin
+   // stradd2(h, path);
+    // Homeadmin
+//    stradd2(path, "admin");
+//    uint32_t len = strlen(path);
+ //   DEBUG_P("ADDED: %s", path);
+
+    DEBUG_P("ADDED LEN: %u", strlen(path));
+    DEBUG_P("ADDED PATH: %s", path);
+//    DEBUG_P("ADDED PATH2: %s", test2);
+//    DEBUG_P("ADDED PATH3: %s", test3);
 
 //    char * path = fs_get_path(root);
 //    DEBUG_P("PATH: %s", path);

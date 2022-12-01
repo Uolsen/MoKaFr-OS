@@ -56,8 +56,8 @@ void terminal_reading()
 		}
 	}
 
-	// delay(10000);
-	delay(1000000000);
+	 delay(10000);
+//	delay(1000000000);
 }
 
 void terminal_clear()
