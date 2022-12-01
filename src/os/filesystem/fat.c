@@ -40,6 +40,8 @@ uint32_t fs_create_node() {
     file_system[node_id] = node;
     DEBUG_F("Node associate after");
 
+    bzero(node.page, 5460);
+
     return node_id;
 }
 
@@ -109,7 +111,8 @@ void fs_create_directory(Node parent, uint8_t* name) {
     // Cast node to Directory
     Directory* parentDirectory = (Directory*) parent.page;
 
-    &parentDirectory = 0;
+//    bzero(parentDirectory, 5460);
+//    &parentDirectory = 0;
 
     // create directory node
     DirectoryEntry * entry = fs_add_directory_entry(parentDirectory, 1, name);
