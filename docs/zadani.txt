@@ -22,7 +22,7 @@ Ovladače:
 Uživatelské procesy:
 - konzole
   - diagnostické vstupy a výstupy
-  - můžu se např. podívat, jak dlouho systém běží (klidně abstraktní jednotky jako cykly nebo tiky plánovače, není třeba vteřiny), popř. co shledáte za vhodné
+//  - můžu se např. podívat, jak dlouho systém běží (klidně abstraktní jednotky jako cykly nebo tiky plánovače, není třeba vteřiny), popř. co shledáte za vhodné
   - můžu nastavit, co se na displeji bude ukazovat (pokud tam máte např. čas/datum a nějaký string, tak třeba formát času/data a ten string)
     - sám nevykonává displejovou funkci, posílá data v příkazech do řídicího procesu (níže)
 - Bluetooth komunikátor
