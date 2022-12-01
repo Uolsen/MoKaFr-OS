@@ -9,8 +9,9 @@
 typedef struct Node {
     uint8_t used;
     uint32_t id;
-    uint32_t next;
     uint64_t page;
+    uint8_t w;
+    uint8_t r;
 } Node;
 
 
