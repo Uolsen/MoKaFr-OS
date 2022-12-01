@@ -1,4 +1,6 @@
 #include "stdlib/stdstring.h"
+#include "lib.h"
+#include "debug/debug.h"
 
 const char char_conv_arr[] = "0123456789ABCDEF";
 
@@ -55,6 +57,19 @@ char* strncpy(char* dest, const char *src, int size) {
         dest[i] = src[i];
     for (; i < size; i++)
         dest[i] = '\0';
+
+    return dest;
+}
+
+// add to end of dest string src
+char* stradd(char* dest, const char *src, int size) {
+
+    uint32_t dest_len = strlen(dest);
+
+    for (uint32_t i = dest_len, s = 0; s < size; i++, s++)
+    {
+        dest[i] = src[s];
+    }
 
     return dest;
 }

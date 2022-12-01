@@ -119,6 +119,12 @@ int printk(const char *format, int64_t data[])
                 buffer_size += read_string(buffer, buffer_size, string);
                 break;
 
+            case 'c':
+                char c = (uint8_t) data[count];
+                char str[2] = {c, '\0'};
+                buffer_size += read_string(buffer, buffer_size, str);
+                break;
+
             default:
                 buffer[buffer_size++] = '%';
                 i--;

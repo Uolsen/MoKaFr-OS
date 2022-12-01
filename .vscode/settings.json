@@ -17,7 +17,9 @@
 		"gic400.h": "c",
 		"sched.h": "c",
 		"sys.h": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"stdstring.h": "c",
+		"debug.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "Enabled",
 	"C_Cpp.intelliSenseEngineFallback": "Disabled"

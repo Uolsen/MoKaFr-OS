@@ -31,8 +31,6 @@ void get_buffer(uint8_t * str){
         buffer[i] = '\0';
     }
     buff_len = 0;
-    
-    DEBUG_P("BUFFER: %s", str);
 }
 
 void write_char(unsigned char c)
@@ -100,7 +98,8 @@ void uart_handler(void)
 
         if (ch == '\r')
         {
-            write_string("\r\n");
+            // write_string("\r\n");
+            load_char('\n');
         }
         else if (ch == '\\')
         {

@@ -14,16 +14,16 @@ void init_timer(void)
 
 void timer_interrupt_handler(void)
 {
-    DEBUG_F("timer_interrupt_handler");
+    // DEBUG_F("timer_interrupt_handler");
 
     // timer_tick();
 
     uint32_t mask = mmio_read(ARM_TIMER_MSKIRQ);
 
-    DEBUG_P("timer_interrupt_handler mask: %u", mask);
+    // DEBUG_P("timer_interrupt_handler mask: %u", mask);
 
     if (mask & 1) {
-        DEBUG_F("timer_interrupt_handler MASK");
+        // DEBUG_F("timer_interrupt_handler MASK");
         mmio_write(ARM_TIMER_IRQCNTL, 1);
 
         timer_tick();

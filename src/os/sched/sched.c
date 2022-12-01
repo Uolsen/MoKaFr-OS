@@ -61,8 +61,8 @@ void switch_to(struct task_struct * next)
 		return;
 	struct task_struct * prev = current;
 	current = next;
-	DEBUG_P("switch_to prev: %u", prev);
-	DEBUG_P("switch_to next: %u", next);
+	// DEBUG_P("switch_to prev: %u", prev);
+	// DEBUG_P("switch_to next: %u", next);
 	cpu_switch_to(prev, next);
 	// DEBUG_F("switch_to AFTER");
 }
