@@ -8,6 +8,7 @@
 #include "interrupt/gic400.h"
 #include "sched/sched.h"
 #include "filesystem/fat.h"
+#include "user/terminal.h"
 
 void user_process1(char *array)
 {
@@ -19,6 +20,19 @@ void user_process1(char *array)
 			delay(100000);
 		}
 	}
+}
+
+void register_process(unsigned long process) {
+    unsigned long stack = call_sys_malloc();
+    if (stack < 0) {
+        print("Error while allocating stack for process 1\n\r");
+        return;
+    }
+    int err = call_sys_clone(process, (unsigned long)"", stack);
+    if (err < 0){
+        print("Error while clonning process 1\n\r");
+        return;
+    }
 }
 
 void user_process(){
@@ -65,6 +79,10 @@ void main()
     fs_init();
 
     Node root = fs_get_node(1);
+
+//    char * path = fs_get_path(root);
+//    DEBUG_P("PATH: %s", path);
+
     Directory* rootDirectory = (Directory*) root.page;
     fs_create_directory(root, "test");
     rootDirectory->entries[5].node_id;
