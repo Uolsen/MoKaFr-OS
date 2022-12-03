@@ -98,6 +98,13 @@ void main()
     fb_init();
     fs_init();
 
+    DEBUG_P("a %u", (uint8_t)'a'); //97
+    DEBUG_P("z %u", (uint8_t)'z'); // 122
+    DEBUG_P("A %u", (uint8_t)'A'); // 65
+    DEBUG_P("Z %u", (uint8_t)'Z'); // 90
+    DEBUG_P("0 %u", (uint8_t)'0'); // 48
+    DEBUG_P("9 %u", (uint8_t)'9'); // 59
+
 //    char ** strings = strsplit(" dev home admin", ' ', 1);
 //    for (int i = 0; i < 5; i++) {
 //        DEBUG_P("string: %s", strings + (i * 8 * 16));

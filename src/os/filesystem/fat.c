@@ -90,6 +90,22 @@ char *fs_get_path(Node node) {
 }
 
 uint8_t fs_check_name(Directory *directory, uint8_t *name) {
+    for (uint32_t j = 0; j < strlen(name); j++) {
+//        DEBUG_P("a %u", (uint8_t)'a'); //97
+//        DEBUG_P("z %u", (uint8_t)'z'); // 122
+//        DEBUG_P("A %u", (uint8_t)'A'); // 65
+//        DEBUG_P("Z %u", (uint8_t)'Z'); // 90
+//        DEBUG_P("0 %u", (uint8_t)'0'); // 48
+//        DEBUG_P("9 %u", (uint8_t)'9'); // 59
+        if (!(
+                (name[j] >= 'a' && name[j] <= 'z') ||
+                (name[j] >= 'A' && name[j] && name[j] <= 'Z') ||
+                (name[j] >= '0' && name[j] && name[j] <= '9')
+                )) {
+            return 0;
+        }
+    }
+
     for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
         if (strncmp(directory->entries[i].name, name, strlen(name)) == 0) {
             return 0;
