@@ -48,6 +48,14 @@ File *fs_node_get_file(Node node) {
     return (File *) node.page;
 }
 
+char * fs_get_name_by_node_id(Directory * directory, uint32_t id) {
+    for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
+        if (directory->entries[i].node_id == id) {
+            return directory->entries[i].name;
+        }
+    }
+}
+
 char *fs_get_path(Node node) {
     // Get current node
     if (node.id == 1) {
@@ -58,10 +66,13 @@ char *fs_get_path(Node node) {
 
     while (node.id != 1) {
         Directory *directory = fs_node_get_directory(node);
-        // todo -> nelze zjistit nazev nodu, v kterem zrovna jsem -> node si bude muset pamatovat sve jmeno !!!!!!!
-        DirectoryEntry * current = fs_get_current_directory_entry(directory);
-        DEBUG_P("current->name %s", current->name);
-        straddtostart(current->name, path);
+        DirectoryEntry * parentEntry = fs_get_parent_directory_entry(directory);
+        Node parentNode = fs_get_node(parentEntry->node_id);
+        Directory * parentDirectory = fs_node_get_directory(parentNode);
+        char * name = fs_get_name_by_node_id(parentDirectory, node.id);
+
+        DEBUG_P("name %s", name);
+        straddtostart(name, path);
         straddtostart("/", path);
         DirectoryEntry * parent = fs_get_parent_directory_entry(directory);
         node = fs_get_node(parent->node_id);

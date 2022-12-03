@@ -41,6 +41,7 @@ uint32_t fs_create_node();
 void fs_create_directory(Node parent, uint8_t* name);
 void fs_create_file(Node parent, uint8_t* name);
 Node fs_get_node(uint32_t id);
+char * fs_get_name_by_node_id(Directory * directory, uint32_t id);
 Directory * fs_node_get_directory(Node node);
 File * fs_node_get_file(Node node);
 char * fs_get_path(Node node);
