@@ -19,7 +19,7 @@ typedef struct Node {
 typedef struct DirectoryEntry {
     uint8_t used;
     uint8_t is_directory;
-    uint8_t* name;
+    uint8_t name[32];
     uint32_t node_id;
     uint32_t size;
 } DirectoryEntry;

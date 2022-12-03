@@ -3,6 +3,7 @@
 #include "debug/debug.h"
 
 const char char_conv_arr[] = "0123456789ABCDEF";
+static char split [32][1024];
 
 // int to string
 void itoa(unsigned int input, char* output, unsigned int base) {

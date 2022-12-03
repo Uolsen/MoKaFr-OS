@@ -10,6 +10,7 @@
 #include "filesystem/fat.h"
 #include "user/terminal.h"
 #include "sysproc/sysinfo.h"
+#include "stdlib/stdstring.h"
 
 static uint8_t path[1024];
 

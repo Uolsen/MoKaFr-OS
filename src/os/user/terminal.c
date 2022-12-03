@@ -6,8 +6,16 @@
 #include "debug/debug.h"
 #include "rng/prng.h"
 #include "sysproc/sysinfo.h"
+#include "user/fs_terminal.h"
+#include "filesystem/fat.h"
 
 static uint8_t input[MAX_BUFFER_SIZE];
+
+static uint32_t current_node_id;
+
+uint32_t get_current_node_id() {
+    return current_node_id;
+}
 
 void terminal_main()
 {

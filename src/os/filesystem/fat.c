@@ -111,7 +111,8 @@ DirectoryEntry *fs_add_directory_entry_with_link(Directory *directory, uint8_t *
 
     entry->is_directory = 1;
     entry->node_id = target_id;
-    entry->name = name;
+    strncpy(entry->name, name, strlen(name));
+//    entry->name = name;
     entry->used = 1;
 
     return entry;
@@ -134,7 +135,8 @@ DirectoryEntry *fs_add_directory_entry(Directory *directory, uint8_t is_director
 
     entry->is_directory = is_directory;
     entry->node_id = fs_create_node();
-    entry->name = name;
+    strncpy(entry->name, name, strlen(name));
+//    entry->name = name;
     entry->used = 1;
 
     return entry;

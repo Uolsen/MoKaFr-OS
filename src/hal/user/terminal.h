@@ -11,5 +11,6 @@ enum state
 };
 
 void terminal_main();
+uint32_t get_current_node_id();
 
 #endif
