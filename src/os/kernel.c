@@ -97,6 +97,13 @@ void main()
     fb_init();
     fs_init();
 
+//    Token * strings[32]
+//    char strings[1024][32];
+//    strsplitpath("/dev/home/admin", '/', *strings);
+    char ** strings = strsplit("/dev/home/admin", '/', 1);
+    for (int i = 0; i < 5; i++) {
+        DEBUG_P("string: %s", strings + (i * 8 * 16));
+    }
 
     Node root = fs_get_node(1);
 

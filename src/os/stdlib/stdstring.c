@@ -135,3 +135,29 @@ void bzero(void* memory, int length) {
     for (int i = 0; i < length; i++)
         mem[i] = 0;
 }
+
+char ** strsplit(char * src, char znak, int offset) {
+    char token[32];
+    uint32_t token_i = 0;
+    uint32_t tokens_i = 0;
+    for (uint32_t i = offset; i <= strlen(src); i++) {
+        if (src[i] == znak || src[i] == '\0') {
+            strncpy(split[tokens_i], token, strlen(token));
+            tokens_i++;
+            //DEBUG_P("TOKEN %s", token);
+            bzero(token, strlen(token));
+            token_i = 0;
+        } else {
+            token[token_i] = src[i];
+            token_i++;
+            //DEBUG_P("ADD TOKEN %s", &token);
+        }
+    }
+
+    for (int i = 0; i < 5; i++) {
+        DEBUG_P("tokens: %s", split[i]);
+    }
+
+    return split;
+}
+

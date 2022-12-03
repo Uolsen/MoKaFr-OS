@@ -46,6 +46,7 @@ Directory * fs_node_get_directory(Node node);
 File * fs_node_get_file(Node node);
 char * fs_get_path(Node node);
 void fs_init();
+DirectoryEntry *fs_add_directory_entry(Directory *directory, uint8_t is_directory, uint8_t *name);
 DirectoryEntry * fs_get_directory_entry(Directory * directory, uint8_t * name);
 DirectoryEntry * fs_get_parent_directory_entry(Directory * directory);
 DirectoryEntry * fs_get_current_directory_entry(Directory * directory);
