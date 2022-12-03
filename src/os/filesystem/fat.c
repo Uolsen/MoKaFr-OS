@@ -58,6 +58,8 @@ char * fs_get_name_by_node_id(Directory * directory, uint32_t id) {
 }
 
 char *fs_get_path(Node node) {
+
+    DEBUG_P("start node id %u", node.id);
     // Get current node
     if (node.id == 1) {
         return "/";
@@ -72,6 +74,8 @@ char *fs_get_path(Node node) {
         Directory * parentDirectory = fs_node_get_directory(parentNode);
         char * name = fs_get_name_by_node_id(parentDirectory, node.id);
 
+        DEBUG_P("parent node id %u", parentNode.id);
+        DEBUG_P("node id %u", node.id);
         DEBUG_P("name %s", name);
         straddtostart(name, path);
         straddtostart("/", path);
@@ -83,6 +87,16 @@ char *fs_get_path(Node node) {
 
     // Cast node.page -> directory -> get entries -> get .. (ID 1)
     // Repeat
+}
+
+uint8_t fs_check_name(Directory *directory, uint8_t *name) {
+    for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
+        if (strncmp(directory->entries[i].name, name, strlen(name)) == 0) {
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 DirectoryEntry *fs_add_directory_entry_with_link(Directory *directory, uint8_t *name, uint32_t target_id) {
@@ -104,6 +118,11 @@ DirectoryEntry *fs_add_directory_entry_with_link(Directory *directory, uint8_t *
 }
 
 DirectoryEntry *fs_add_directory_entry(Directory *directory, uint8_t is_directory, uint8_t *name) {
+    if (!fs_check_name(directory, name)) {
+        print("Use other name!");
+        return;
+    }
+
     DirectoryEntry *entry;
     for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
         if (!directory->entries[i].used) {

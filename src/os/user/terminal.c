@@ -15,7 +15,9 @@ void terminal_main()
 	call_sys_write("Terminal started\r\n");
 	call_sys_write("MoKaFrOS /:\r\n");
 	// char input = read_char();
-	printp("MoKaFrOS /: %s", input);
+//	printp("MoKaFrOS /: %s", input);
+    int64_t params[] = {fs_get_path(fs_get_node(current_node_id)), input};
+    printk("MoKaFrOS %s: %s", params);
 
 	uint8_t state = term_input;
 
@@ -92,5 +94,7 @@ void terminal_clear()
 
 	// write new promt line
 	call_sys_write("\r\n");
-	printp("MoKaFrOS /: %s", input);
+//	printp("MoKaFrOS /: %s", input);
+    int64_t params[] = {fs_get_path(fs_get_node(current_node_id)), input};
+    printk("MoKaFrOS %s: %s", params);
 }
