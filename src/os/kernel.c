@@ -97,63 +97,34 @@ void main()
     fb_init();
     fs_init();
 
-//    Token * strings[32]
-//    char strings[1024][32];
-//    strsplitpath("/dev/home/admin", '/', *strings);
-    char ** strings = strsplit("/dev/home/admin", '/', 1);
-    for (int i = 0; i < 5; i++) {
-        DEBUG_P("string: %s", strings + (i * 8 * 16));
-    }
+//    char ** strings = strsplit(" dev home admin", ' ', 1);
+//    for (int i = 0; i < 5; i++) {
+//        DEBUG_P("string: %s", strings + (i * 8 * 16));
+//    }
 
     Node root = fs_get_node(1);
 
-//    straddtostart("/admin", path); //=> /admin
-//    straddtostart("/home", path); //=> /home/admin
-//    straddtostart("/root", path); //=> root/home/admnin
-    // "/"
-    DEBUG_P("ROOT PATH: %s", fs_get_path(root));
-
-//    stradd2(path, "admin"); //=> /admin
-//    stradd2(path, "home"); //=> /home/admin
-//    stradd2(path, "root"); //=> root/home/admnin
-
-//    char *s = straddtostart("/admin", "home", ch);
-//    char *x = straddtostart(s, "root", path[1024]);
-//    stradd2("admin", "/", path);
-    // path = admin
-   // stradd2(h, path);
-    // Homeadmin
-//    stradd2(path, "admin");
-//    uint32_t len = strlen(path);
- //   DEBUG_P("ADDED: %s", path);
-
-//    DEBUG_P("ADDED LEN: %u", strlen(path));
-//    DEBUG_P("ADDED PATH: %s", path);
-//    DEBUG_P("ADDED PATH2: %s", test2);
-//    DEBUG_P("ADDED PATH3: %s", test3);
-
-//    char * path = fs_get_path(root);
-//    DEBUG_P("PATH: %s", path);
-
-    Directory* rootDirectory = (Directory*) root.page;
-    fs_create_directory(root, "test");
-    rootDirectory->entries[5].node_id;
-
-    for (uint32_t i = 0; i < 20; i++) {
-        if (rootDirectory->entries[i].used) {
-            DEBUG_P("Name: %s", rootDirectory->entries[i].name);
-        }
-    }
-    Node node = fs_get_node(rootDirectory->entries[5].node_id);
-    Directory * nodeDirectory = (Directory*) node.page;
-    fs_create_file(node, "test2");
-    // "/test"
-    DEBUG_P("NODE PATH: %s", fs_get_path(node));
-    for (uint32_t i = 0; i < 20; i++) {
-        if (nodeDirectory->entries[i].used) {
-            DEBUG_P("Name2: %s", nodeDirectory->entries[i].name);
-        }
-    }
+//    DEBUG_P("ROOT PATH: %s", fs_get_path(root));
+//
+//    Directory* rootDirectory = (Directory*) root.page;
+//    fs_create_directory(root, "test");
+//    rootDirectory->entries[5].node_id;
+//
+//    for (uint32_t i = 0; i < 20; i++) {
+//        if (rootDirectory->entries[i].used) {
+//            DEBUG_P("Name: %s", rootDirectory->entries[i].name);
+//        }
+//    }
+//    Node node = fs_get_node(rootDirectory->entries[5].node_id);
+//    Directory * nodeDirectory = (Directory*) node.page;
+//    fs_create_file(node, "test2");
+//    // "/test"
+//    DEBUG_P("NODE PATH: %s", fs_get_path(node));
+//    for (uint32_t i = 0; i < 20; i++) {
+//        if (nodeDirectory->entries[i].used) {
+//            DEBUG_P("Name2: %s", nodeDirectory->entries[i].name);
+//        }
+//    }
 
     init_interrupt_controller();
     // enable_interrupt_controller();

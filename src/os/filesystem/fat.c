@@ -51,6 +51,7 @@ File *fs_node_get_file(Node node) {
 char * fs_get_name_by_node_id(Directory * directory, uint32_t id) {
     for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
         if (directory->entries[i].node_id == id) {
+            DEBUG_P("get_name %s", directory->entries[i].name);
             return directory->entries[i].name;
         }
     }
@@ -176,9 +177,9 @@ void fs_init() {
 
     Node root = file_system[id];
     Directory *rootDirectory = (Directory *) root.page;
-    fs_add_directory_entry_with_link(rootDirectory, ".", rootDirectory);
-    fs_add_directory_entry_with_link(rootDirectory, "..", rootDirectory);
-    fs_add_directory_entry(rootDirectory, 1, "sys");
-    fs_add_directory_entry(rootDirectory, 1, "dev");
-    fs_add_directory_entry(rootDirectory, 1, "mnt");
+    fs_add_directory_entry_with_link(rootDirectory, ".", root.id);
+    fs_add_directory_entry_with_link(rootDirectory, "..", root.id);
+    fs_create_directory(root, "sys");
+    fs_create_directory(root, "dev");
+    fs_create_directory(root, "mnt");
 }

@@ -16,6 +16,8 @@ void print_debug(char *string) {
     #ifdef DEBUG
     int64_t params[] = {(int64_t) string};
     printk("DEBUG INFO: %s\r\n", params);
+    #else
+    print("");
     #endif
 }
 

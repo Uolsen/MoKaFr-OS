@@ -11,6 +11,7 @@ static uint8_t input[MAX_BUFFER_SIZE];
 
 void terminal_main()
 {
+    current_node_id = 1;
 	call_sys_write("Terminal started\r\n");
 	call_sys_write("MoKaFrOS /:\r\n");
 	// char input = read_char();
@@ -63,12 +64,22 @@ void terminal_reading()
 	delay(10000);
 }
 
-void programms(char * input){
-	if (strncmp("ticks", input, strlen("ticks")) == 0){
-		printp("Ticks: %u", sysinfo_get_ticks());
-	} else if (strncmp("rand", input, strlen("rand")) == 0){
-		printp("Random number: %u", prng_get());
-	}
+void programms(char * input) {
+    if (strncmp("ticks", input, strlen("ticks")) == 0) {
+        printp("Ticks: %u", sysinfo_get_ticks());
+    } else if (strncmp("rand", input, strlen("rand")) == 0) {
+        printp("Random number: %u", prng_get());
+    } else if (strncmp("mkdir", input, strlen("mkdir")) == 0) {
+        mkdir(input);
+    } else if (strncmp("ls", input, strlen("ls")) == 0) {
+        ls();
+    } else if (strncmp("cd", input, strlen("cd")) == 0) {
+        current_node_id = cd(current_node_id, input);
+    } else if (strncmp("pwd", input, strlen("pwd")) == 0) {
+        pwd();
+    } else if (strncmp("touch", input, strlen("touch")) == 0) {
+        touch(input);
+    }
 }
 
 void terminal_clear()
