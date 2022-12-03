@@ -74,8 +74,7 @@ char *fs_get_path(Node node) {
         DEBUG_P("name %s", name);
         straddtostart(name, path);
         straddtostart("/", path);
-        DirectoryEntry * parent = fs_get_parent_directory_entry(directory);
-        node = fs_get_node(parent->node_id);
+        node = fs_get_node(parentEntry->node_id);
 
     }
 
