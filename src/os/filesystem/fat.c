@@ -3,6 +3,7 @@
 #include "stdlib/stdstring.h"
 
 static Node file_system[FILESYSTEM_SIZE];
+static char path[MAX_PATH_SIZE];
 
 Node fs_get_node(uint32_t id) {
     return file_system[id];
@@ -53,19 +54,21 @@ char *fs_get_path(Node node) {
         return "/";
     }
 
-    char path[1024];
-    char path_reversed[1024];
+    bzero(path, MAX_PATH_SIZE);
 
     while (node.id != 1) {
         Directory *directory = fs_node_get_directory(node);
+        // todo -> nelze zjistit nazev nodu, v kterem zrovna jsem -> node si bude muset pamatovat sve jmeno !!!!!!!
+        DirectoryEntry * current = fs_get_current_directory_entry(directory);
+        DEBUG_P("current->name %s", current->name);
+        straddtostart(current->name, path);
+        straddtostart("/", path);
+        DirectoryEntry * parent = fs_get_parent_directory_entry(directory);
+        node = fs_get_node(parent->node_id);
 
-        DirectoryEntry * entry = fs_get_parent_directory_entry(directory);
-    //    straddtostart(path_reversed, entry->name, strlen(entry->name));
-
-        node = fs_get_node(entry->node_id);
     }
 
-    return path_reversed;
+    return path;
 
     // Cast node.page -> directory -> get entries -> get .. (ID 1)
     // Repeat
@@ -134,8 +137,8 @@ void fs_create_directory(Node parent, uint8_t *name) {
 }
 
 DirectoryEntry *fs_get_directory_entry(Directory *directory, uint8_t *name) {
-    for (int i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
-        if (strncmp(directory->entries[i].name, name, strlen(name))) {
+    for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
+        if (strncmp(directory->entries[i].name, name, strlen(name)) == 0) {
             return &directory->entries[i];
         }
     }

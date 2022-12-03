@@ -5,6 +5,7 @@
 
 #define FILESYSTEM_SIZE 256
 #define MAX_DIRECTORY_ENTRIES 90
+#define MAX_PATH_SIZE 1024
 
 typedef struct Node {
     uint8_t used;

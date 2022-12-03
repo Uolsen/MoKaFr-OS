@@ -121,12 +121,11 @@ void straddtostart(char *src, char * target) {
     //stradd2("admin", "home") => /home/admin
     //stradd2("home/admin", "root") => root/home/admnin
 
-    stradd2(target, src);
+    char tmp[1024] = {0};
+    strncpy(tmp, src, strlen(src));
+    stradd2(target, tmp);
+    strncpy(target, tmp, strlen(tmp));
 
-//    char temp[1024];
-//    strncpy(temp, target, strlen(temp));
-//    stradd2(temp, src);
-//    stradd2(target, src);
 }
 
 // vynulovani pameti

@@ -100,11 +100,15 @@ void main()
 
     Node root = fs_get_node(1);
 
+//    straddtostart("/admin", path); //=> /admin
+//    straddtostart("/home", path); //=> /home/admin
+//    straddtostart("/root", path); //=> root/home/admnin
+    // "/"
+    DEBUG_P("ROOT PATH: %s", fs_get_path(root));
 
-
-    stradd2(path, "admin"); //=> /admin
-    stradd2(path, "home"); //=> /home/admin
-    stradd2(path, "root"); //=> root/home/admnin
+//    stradd2(path, "admin"); //=> /admin
+//    stradd2(path, "home"); //=> /home/admin
+//    stradd2(path, "root"); //=> root/home/admnin
 
 //    char *s = straddtostart("/admin", "home", ch);
 //    char *x = straddtostart(s, "root", path[1024]);
@@ -116,8 +120,8 @@ void main()
 //    uint32_t len = strlen(path);
  //   DEBUG_P("ADDED: %s", path);
 
-    DEBUG_P("ADDED LEN: %u", strlen(path));
-    DEBUG_P("ADDED PATH: %s", path);
+//    DEBUG_P("ADDED LEN: %u", strlen(path));
+//    DEBUG_P("ADDED PATH: %s", path);
 //    DEBUG_P("ADDED PATH2: %s", test2);
 //    DEBUG_P("ADDED PATH3: %s", test3);
 
@@ -131,17 +135,16 @@ void main()
     for (uint32_t i = 0; i < 20; i++) {
         if (rootDirectory->entries[i].used) {
             DEBUG_P("Name: %s", rootDirectory->entries[i].name);
-//            DEBUG_P("Name %u", i);
         }
     }
     Node node = fs_get_node(rootDirectory->entries[5].node_id);
     Directory * nodeDirectory = (Directory*) node.page;
     fs_create_file(node, "test2");
+    // "/test"
+    DEBUG_P("NODE PATH: %s", fs_get_path(node));
     for (uint32_t i = 0; i < 20; i++) {
         if (nodeDirectory->entries[i].used) {
             DEBUG_P("Name2: %s", nodeDirectory->entries[i].name);
-//            DEBUG_P("Name2 %u", i);
-
         }
     }
 
