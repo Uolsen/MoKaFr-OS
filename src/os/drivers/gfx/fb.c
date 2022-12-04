@@ -176,7 +176,7 @@ void fb_clear() {
 
     for(x = 0; x < 1920; x++) {
         for(y = 0; y < 1080; y++) {
-            drawPixel(x, y, 0xff);
+            drawPixel(x, y, 0x00);
         }
     }
 }
