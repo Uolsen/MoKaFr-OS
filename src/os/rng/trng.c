@@ -29,6 +29,9 @@ uint64_t rand(uint64_t min, uint64_t max) {
 }
 */
 
+/**
+ * Initializes the true random generator.
+ */
 void init_rand() {
     mmio_write(RNG_STATUS, 0x40000);
     uint64_t mask_value = mmio_read(RNG_INT_MASK);
@@ -40,6 +43,12 @@ void init_rand() {
     DEBUG_F("RAND INIT OK");
 }
 
+/**
+ * Generate a random number.
+ * @param min
+ * @param max
+ * @return
+ */
 uint64_t rand(uint64_t min, uint64_t max) {
     uint64_t status_value = mmio_read(RNG_STATUS);
     while(!(status_value >> 24)) ;

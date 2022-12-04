@@ -5,6 +5,9 @@
 
 int run = 100;
 
+/**
+ * Entry point of the GFX process.
+ */
 void gfx_main() {
         DEBUG_F("Running GFX Process");
     while (1) {
@@ -100,6 +103,11 @@ void gfx_main() {
     }
 }
 
+/**
+ * Verifies the circle draw input.
+ * @param split
+ * @return
+ */
 uint32_t verify_circle(uint8_t * split) {
     return 1;
     //  TODO: Check if there are right data

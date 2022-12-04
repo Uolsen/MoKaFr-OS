@@ -5,6 +5,10 @@
 
 uint64_t seed = PRNG_SEED;
 
+/**
+ * Returns a random number.
+ * @return
+ */
 uint64_t prng_get(){
     uint64_t ticks = sysinfo_get_ticks();
     if (ticks == 0 || ticks == seed){

@@ -13,10 +13,17 @@ static uint8_t input[MAX_BUFFER_SIZE];
 
 static uint32_t current_node_id;
 
+/**
+ * Returns the currently visited (filesystem) node.
+ * @return
+ */
 uint32_t get_current_node_id() {
     return current_node_id;
 }
 
+/**
+ * Entry point of the terminal process.
+ */
 void terminal_main()
 {
     current_node_id = 1;
@@ -43,6 +50,9 @@ void terminal_main()
 	}
 }
 
+/**
+ * Reading UART input for terminal.
+ */
 void terminal_reading()
 {
 	static uint8_t *buffer[MAX_BUFFER_SIZE];
@@ -74,6 +84,11 @@ void terminal_reading()
 	delay(10000);
 }
 
+/**
+ * Handles all terminal programmes.
+ *
+ * @param input Input of the CLI
+ */
 void programms(char * input) {
     if (strncmp("ticks", input, strlen("ticks")) == 0) {
         printp("Ticks: %u", sysinfo_get_ticks());
@@ -100,6 +115,9 @@ void programms(char * input) {
     }
 }
 
+/**
+ * Clears the terminal input.
+ */
 void terminal_clear()
 {
 	// clear input
@@ -108,7 +126,7 @@ void terminal_clear()
 		input[i] = '\0';
 	}
 
-	// write new promt line
+	// write new prompt line
 	call_sys_write("\r\n");
 //	printp("MoKaFrOS /: %s", input);
     int64_t params[] = {fs_get_path(fs_get_node(current_node_id)), input};

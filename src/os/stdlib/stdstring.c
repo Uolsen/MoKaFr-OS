@@ -5,7 +5,12 @@
 const char char_conv_arr[] = "0123456789ABCDEF";
 static char split [32][1024];
 
-// int to string
+/**
+ * Attempt to convert the given int to string.
+ * @param input
+ * @param output
+ * @param base
+ */
 void itoa(unsigned int input, char* output, unsigned int base) {
     int i = 0;
 
@@ -32,7 +37,12 @@ void itoa(unsigned int input, char* output, unsigned int base) {
     }
 }
 
-// string to int
+/**
+ * Attempt to convert the given string to an int.
+ *
+ * @param input
+ * @return
+ */
 int atoi(const char* input) {
     int output = 0;
 
@@ -50,7 +60,14 @@ int atoi(const char* input) {
     return output;
 }
 
-// copy string
+/**
+ * Copies the given string (src) to another string (dest).
+ *
+ * @param dest
+ * @param src
+ * @param size
+ * @return
+ */
 char* strncpy(char* dest, const char *src, int size) {
     int i;
 
@@ -62,6 +79,14 @@ char* strncpy(char* dest, const char *src, int size) {
     return dest;
 }
 
+/**
+ * Add the given string (src) at the end of another string (dest).
+ *
+ * @param dest
+ * @param src
+ * @param size
+ * @return
+ */
 // add to end of dest string src
 char* stradd(char* dest, const char *src, int size) {
 
@@ -75,7 +100,14 @@ char* stradd(char* dest, const char *src, int size) {
     return dest;
 }
 
-// compare strings
+/**
+ * Compare whether two strings match.
+ *
+ * @param s1
+ * @param s2
+ * @param size
+ * @return
+ */
 int strncmp(const char *s1, const char *s2, int size) {
     unsigned char u1, u2;
     while (size-- > 0)
@@ -91,7 +123,12 @@ int strncmp(const char *s1, const char *s2, int size) {
     return 0;
 }
 
-// string length
+/**
+ * Get the length of the specified string.
+ *
+ * @param s
+ * @return
+ */
 int strlen(const char* s) {
     int i = 0;
 
@@ -101,6 +138,12 @@ int strlen(const char* s) {
     return i;
 }
 
+/**
+ * Adds the given string (src) at the end of another string (dest).
+ *
+ * @param src
+ * @param dest
+ */
 void stradd2(char* src, char* dest) {
 //    int j = 0;
     for (int i = strlen(dest), j = 0; j < strlen(src); j++, i++) {
@@ -110,7 +153,11 @@ void stradd2(char* src, char* dest) {
 //    return dest;
 }
 
-// add to begin of dest string src
+/**
+ * Add the given string (target) at the beginning of another string (src).
+ * @param src
+ * @param target
+ */
 void straddtostart(char *src, char * target) {
 
     // /root/home/admin
@@ -129,7 +176,12 @@ void straddtostart(char *src, char * target) {
 
 }
 
-// vynulovani pameti
+/**
+ * Clear the memory at the specified address and length.
+ *
+ * @param memory
+ * @param length
+ */
 void bzero(void* memory, int length) {
     char* mem = (char*)(memory);
 
@@ -137,8 +189,16 @@ void bzero(void* memory, int length) {
         mem[i] = 0;
 }
 
-char ** strsplit(char * src, char znak, int offset) {
-    bzero(split, 32*1024);
+/**
+ * Split the specified string using the given delimiter and offset.
+ *
+ * @param src The source string to split
+ * @param znak The character to split by (delimiter)
+ * @param offset Set 0 to split the whole string.
+ * @return Array of splitted values
+ */
+uint32_t ** strsplit(uint8_t * src, uint8_t znak, uint32_t offset) {
+    bzero(split, 32 * 1024);
     char token[32];
     uint32_t token_i = 0;
     uint32_t tokens_i = 0;
@@ -162,4 +222,18 @@ char ** strsplit(char * src, char znak, int offset) {
 
     return &split;
 }
+
+/**
+ * Returns a part of the specified splitted string (array) at the given index.
+ *
+ * Ex: to get the second part of a splitted string, use get_split(<split>, 2)
+ *
+ * @param split Result of the strsplit function the s
+ * @param index Index of the splitted part to get
+ * @return
+ */
+uint8_t * get_split(uint8_t * split, uint32_t index) {
+    return split + (1024 * index);
+}
+
 

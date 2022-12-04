@@ -17,11 +17,21 @@ int crln = 0;
 static uint8_t buffer[MAX_BUFFER_SIZE];
 static uint32_t buff_len = 0;
 
+/**
+ * Loads the specified character into the buffer.
+ *
+ * @param c
+ */
 void load_char(unsigned char c) {
     buffer[buff_len] = c;
     buff_len++;
 }
 
+/**
+ * Gets the buffer.
+ *
+ * @param str
+ */
 void get_buffer(uint8_t *str) {
     strncpy(str, buffer, MAX_BUFFER_SIZE);
     for (uint32_t i = 0; i < MAX_BUFFER_SIZE; i++) {
@@ -30,6 +40,11 @@ void get_buffer(uint8_t *str) {
     buff_len = 0;
 }
 
+/**
+ * Write character to UART.
+ *
+ * @param c
+ */
 void write_char(unsigned char c) {
     while (mmio_read(UART0_FR) & (1 << 3)) {
     }
@@ -71,16 +86,28 @@ void write_char(unsigned char c) {
 //    }
 }
 
+/**
+ * Read character from UART.
+ *
+ * @return
+ */
 unsigned char read_char(void) {
     return in_word(UART0_DR);
 }
 
+/**
+ * Write string to UART.
+ * @param string
+ */
 void write_string(const char *string) {
     for (int i = 0; string[i] != '\0'; i++) {
         write_char(string[i]);
     }
 }
 
+/**
+ * Handles UART communication.
+ */
 void uart_handler(void) {
     uint32_t status = in_word(UART0_MIS);
 
@@ -103,6 +130,9 @@ void uart_handler(void) {
     }
 }
 
+/**
+ * Initializes UART 0 registers.
+ */
 void init_uart(void) {
     gpio_set_function(14, Alt_0);
     gpio_set_function(15, Alt_0);
@@ -115,6 +145,9 @@ void init_uart(void) {
     out_word(UART0_CR, (1 << 0) | (1 << 8) | (1 << 9));
 }
 
+/**
+ * Initializes UART 5 registers (WIP).
+ */
 void init_uart_5(void) {
     gpio_set_function(12, Alt_4);
     gpio_set_function(13, Alt_4);

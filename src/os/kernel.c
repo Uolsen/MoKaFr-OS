@@ -15,6 +15,11 @@
 
 static uint8_t path[1024];
 
+/**
+ * Testing user process.
+ *
+ * @param array
+ */
 void user_process1(char *array)
 {
 	char buf[2] = {0};
@@ -27,6 +32,11 @@ void user_process1(char *array)
 	}
 }
 
+/**
+ * Registers the given process.
+ *
+ * @param process Reference to the process function
+ */
 void register_process(unsigned long process) {
     unsigned long stack = call_sys_malloc();
     if (stack < 0) {
@@ -40,6 +50,9 @@ void register_process(unsigned long process) {
     }
 }
 
+/**
+ * Handles and registers user processes.
+ */
 void user_process(){
 	char buf[30] = {0};
 	print("User process started\n\r");
@@ -94,6 +107,9 @@ void kernel_process(){
 	} 
 }
 
+/**
+ * Entry point of the kernel.
+ */
 void main()
 {
     init_uart();

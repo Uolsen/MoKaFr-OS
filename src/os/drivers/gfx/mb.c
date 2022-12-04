@@ -18,10 +18,16 @@ enum {
     MBOX_EMPTY     = 0x40000000
 };
 
-uint32_t mbox_call(unsigned char ch)
+/**
+ * Handles mailbox communication.
+ *
+ * @param character
+ * @return
+ */
+uint32_t mbox_call(unsigned char character)
 {
     // 28-bit address (MSB) and 4-bit value (LSB)
-    uint32_t r = ((uint32_t)((int64_t) &mbox) &~ 0xF) | (ch & 0xF);
+    uint32_t r = ((uint32_t)((int64_t) &mbox) &~ 0xF) | (character & 0xF);
 
     // Wait until we can write
     while (mmio_read(MBOX_STATUS) & MBOX_FULL);

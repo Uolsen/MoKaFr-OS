@@ -43,6 +43,12 @@ int copy_process(unsigned long clone_flags, unsigned long fn, unsigned long arg,
 }
 
 
+/**
+ * Switches to user space.
+ *
+ * @param pc
+ * @return
+ */
 int move_to_user_mode(unsigned long pc)
 {
 	struct pt_regs *regs = task_pt_regs(current);

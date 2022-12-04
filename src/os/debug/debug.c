@@ -1,6 +1,12 @@
 #include "debug/debug.h"
 #include "print/print.h"
 
+/**
+ * Checks for errors and stops execution and shows file and line where error occured.
+ *
+ * @param file File where the error occurred
+ * @param line Line where the error occurred
+ */
 void error_check(char *file, uint64_t line) {
     #ifdef DEBUG
     int64_t params[] = {(int64_t) file};
@@ -12,6 +18,11 @@ void error_check(char *file, uint64_t line) {
     #endif
 }
 
+/**
+ * If debug mode is enabled, prints a debug message.
+ *
+ * @param string String to print
+ */
 void print_debug(char *string) {
     #ifdef DEBUG
     int64_t params[] = {(int64_t) string};
@@ -21,6 +32,12 @@ void print_debug(char *string) {
     #endif
 }
 
+/**
+ * If debug mode is enabled, prints a debug message with specified parameters.
+ *
+ * @param string String to print
+ * @param params
+ */
 void printk_debug(char *string, int64_t params[]) {
     #ifdef DEBUG
     print("DEBUG INFO: ");
@@ -29,6 +46,12 @@ void printk_debug(char *string, int64_t params[]) {
     #endif
 }
 
+/**
+ * If debug mode is enabled, prints a debug message with one parameter.
+ *
+ * @param string string to print
+ * @param param
+ */
 void printk_debug_p(char *string, int64_t param) {
     #ifdef DEBUG
     print("DEBUG INFO: ");

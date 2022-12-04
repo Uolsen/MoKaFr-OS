@@ -1,14 +1,31 @@
 #include "libc.h"
 #include "intdef.h"
 
-void mmio_write(uint64_t reg, uint32_t val) {
-    *(volatile uint32_t *) reg = val;
+/**
+ * Write to memory.
+ *
+ * @param reg  Register to write to
+ * @param val  Value to write
+ */
+void mmio_write(uint64_t reg, uint32_t value) {
+    *(volatile uint32_t *) reg = value;
 }
 
+/**
+ * Read from memory.
+ *
+ * @param reg  Register to write to
+ * @return Value from register
+ */
 uint64_t mmio_read(uint64_t reg) {
     return *(volatile unsigned int *) reg;
 }
 
+/**
+ * Wait for milliseconds before continuing execution.
+ *
+ * @param ms Milliseconds to wait
+ */
 void wait_ms(uint32_t ms) {
     register uint64_t f, t, r;
 

@@ -7,6 +7,9 @@
 
 static uint64_t ticks = 0;
 
+/**
+ *
+ */
 void sysinfo_main()
 {
 	while (1)
@@ -21,6 +24,11 @@ void sysinfo_main()
 	}
 }
 
+/**
+ * Returns the current ticks.
+ *
+ * @return
+ */
 uint64_t sysinfo_get_ticks()
 {
 	return ticks;

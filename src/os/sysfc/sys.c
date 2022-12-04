@@ -12,6 +12,10 @@ int sys_clone(unsigned long stack){
 	return copy_process(0, 0, 0, stack);
 }
 
+/**
+ * Allocates a free page.
+ * @return
+ */
 unsigned long sys_malloc(){
 	unsigned long addr = get_free_page();
 	if (!addr) {
@@ -20,10 +24,18 @@ unsigned long sys_malloc(){
 	return addr;
 }
 
+/**
+ * Exits the system process.
+ */
 void sys_exit(){
 	exit_process();
 }
 
+/**
+ * Returns the current EL level.
+ *
+ * @return
+ */
 long sys_get_el(){
 	return get_el();
 }

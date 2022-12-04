@@ -70,6 +70,11 @@ static int decimal_to_string(char *buffer, int position, int64_t digits)
     return size;
 }
 
+/**
+ * Write to console.
+ * @param buffer
+ * @param size
+ */
 static void write_console(const char *buffer, int size)
 {
     for (int i = 0; i < size; i++)
@@ -78,6 +83,13 @@ static void write_console(const char *buffer, int size)
     }
 }
 
+/**
+ * Print the given string with the parameters inside the data array.
+ *
+ * @param format
+ * @param data
+ * @return
+ */
 int printk(const char *format, int64_t data[])
 {
     char buffer[1024];
@@ -139,11 +151,24 @@ int printk(const char *format, int64_t data[])
     return buffer_size;
 }
 
+/**
+ * Print the given string with a single parameter.
+ *
+ * @param format
+ * @param param
+ * @return
+ */
 int printp(const char *format, int64_t param) {
     int64_t params[] = {param};
     printk(format, params);
 }
 
+/**
+ * Print the given string.
+ *
+ * @param format
+ * @return
+ */
 int print(const char *format)
 {
     int64_t data[] = {-1};

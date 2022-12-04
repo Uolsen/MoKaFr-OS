@@ -4,6 +4,11 @@
 #include "debug/debug.h"
 #include "filesystem/fat.h"
 
+/**
+ * Creates a new directory.
+ *
+ * @param input Terminal input (mkdir [dirname])
+ */
 void mkdir(uint8_t *input) {
     char *strings = strsplit(input, ' ', 0);
 
@@ -16,6 +21,11 @@ void mkdir(uint8_t *input) {
 //    fs_add_directory_entry(directory, 1, name);
 }
 
+/**
+ * Creates a new blank file.
+ *
+ * @param input Terminal input (touch [filename])
+ */
 void touch (uint8_t *input) {
     char *strings = strsplit(input, ' ', 0);
 
@@ -27,6 +37,9 @@ void touch (uint8_t *input) {
     fs_create_file(node, name);
 }
 
+/**
+ * Lists the content (files / directories) of the current directory.
+ */
 void ls() {
     Directory *directory = fs_node_get_directory(fs_get_node(get_current_node_id()));
     for (uint32_t i = 0; i < MAX_DIRECTORY_ENTRIES; i++) {
@@ -38,6 +51,13 @@ void ls() {
     }
 }
 
+/**
+ * Goes the specified path.
+ *
+ * @param current_node_id Currently visitted node.
+ * @param input Terminal input (cd [path])
+ * @return new node id
+ */
 uint32_t cd(uint32_t current_node_id, uint8_t *input) {
     uint32_t original_node_id = current_node_id;
     char *strings = strsplit(input, ' ', 0);
@@ -80,6 +100,9 @@ uint32_t cd(uint32_t current_node_id, uint8_t *input) {
     return current_node_id;
 }
 
+/**
+ * Prints the current path.
+ */
 void pwd() {
     Node node = fs_get_node(get_current_node_id());
  //   DEBUG_P("NODE ID %u", node.id);
@@ -87,6 +110,11 @@ void pwd() {
     printp("%s", path);
 }
 
+/**
+ * Reads the contents of a file.
+ *
+ * @param input Terminal input (cat [filename])
+ */
 void cat(uint8_t *input) {
     char *strings = strsplit(input, ' ', 0);
 
@@ -121,6 +149,9 @@ void cat(uint8_t *input) {
 
 }
 
+/**
+ * Writes data to GFX pipe for rendering on the screen.
+ */
 void draw(input) {
     char *strings = strsplit(input, ' ', 0);
     char data[1024] = {0};
