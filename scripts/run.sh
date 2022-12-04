@@ -1,0 +1,1 @@
+cd ../ && ./qemu-run.sh
