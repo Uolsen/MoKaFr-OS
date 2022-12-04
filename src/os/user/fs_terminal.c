@@ -4,22 +4,24 @@
 #include "debug/debug.h"
 #include "filesystem/fat.h"
 
-void mkdir(char *input) {
-    char **strings = strsplit(input, ' ', 0);
+void mkdir(uint8_t *input) {
+    char *strings = strsplit(input, ' ', 0);
 
-    char *name;
-    strncpy(name, strings + (1 * 8 * 16), 16);
+    char name[32] = {0};
+    char * split = get_split(strings, 1);
+    strncpy(name, split, strlen(split));
     Node node = fs_get_node(get_current_node_id());
 //    Directory * directory = fs_node_get_directory(node);
     fs_create_directory(node, name);
 //    fs_add_directory_entry(directory, 1, name);
 }
 
-void touch (char *input) {
-    char **strings = strsplit(input, ' ', 0);
+void touch (uint8_t *input) {
+    char *strings = strsplit(input, ' ', 0);
 
-    char *name;
-    strncpy(name, strings + (1 * 8 * 16), 16);
+    char name[32] = {0};
+    char * split = get_split(strings, 1);
+    strncpy(name, split, strlen(split));
     Node node = fs_get_node(get_current_node_id());
 
     fs_create_file(node, name);
@@ -36,7 +38,7 @@ void ls() {
     }
 }
 
-uint32_t cd(uint32_t current_node_id, char *input) {
+uint32_t cd(uint32_t current_node_id, uint8_t *input) {
     uint32_t original_node_id = current_node_id;
     char *strings = strsplit(input, ' ', 0);
 
@@ -68,7 +70,7 @@ uint32_t cd(uint32_t current_node_id, char *input) {
                     print("Cannot move to file!");
                     return original_node_id;
                 }
-                DEBUG_F("Changed current node");
+             //   DEBUG_F("Changed current node");
                 current_node_id = directory->entries[j].node_id;
                 break;
             }
@@ -80,7 +82,7 @@ uint32_t cd(uint32_t current_node_id, char *input) {
 
 void pwd() {
     Node node = fs_get_node(get_current_node_id());
-    DEBUG_P("NODE ID %u", node.id);
+ //   DEBUG_P("NODE ID %u", node.id);
     char *path = fs_get_path(node);
     printp("%s", path);
 }

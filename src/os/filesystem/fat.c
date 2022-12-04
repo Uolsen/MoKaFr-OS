@@ -4,6 +4,7 @@
 
 static Node file_system[FILESYSTEM_SIZE];
 static char path[MAX_PATH_SIZE];
+static DirectoryEntry * GFX_PIPE;
 
 Node fs_get_node(uint32_t id) {
     return file_system[id];
@@ -32,6 +33,8 @@ uint32_t fs_create_node() {
 //    node.next = 0;
     node.page = get_free_page();
     node.id = node_id;
+    node.w = 0;
+    node.r = 0;
 
     file_system[node_id] = node;
 
