@@ -3,7 +3,9 @@
 #include "debug/debug.h"
 
 const char char_conv_arr[] = "0123456789ABCDEF";
-static char split [32][1024];
+
+
+static uint8_t split [32][1024];
 
 /**
  * Attempt to convert the given int to string.
@@ -205,7 +207,7 @@ uint32_t ** strsplit(uint8_t * src, uint8_t znak, uint32_t offset) {
 
     for (uint32_t i = offset; i <= strlen(src); i++) {
         if (src[i] == znak || src[i] == '\0' || src[i] == '\n') {
-            strncpy(split[tokens_i], token, strlen(token));
+            strncpy(&split[tokens_i], token, strlen(token));
             tokens_i++;
             bzero(token, strlen(token));
             token_i = 0;

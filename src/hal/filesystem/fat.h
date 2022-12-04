@@ -41,6 +41,8 @@ typedef struct Pipe {
     uint32_t write_pointer;
 } Pipe;
 
+
+
 uint32_t get_free_node_id();
 //uint32_t fs_create_node();
 uint8_t fs_check_name(Directory *directory, uint8_t *name);
@@ -53,6 +55,7 @@ Directory * fs_node_get_directory(Node node);
 File * fs_node_get_file(Node node);
 Pipe *fs_node_get_pipe(Node node);
 char * fs_get_path(Node node);
+DirectoryEntry * get_gfx_pipe();
 void fs_init();
 DirectoryEntry *fs_add_directory_entry(Directory *directory, uint8_t is_directory, uint8_t *name);
 DirectoryEntry * fs_get_directory_entry(Directory * directory, uint8_t * name);
