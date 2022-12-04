@@ -2,7 +2,7 @@ CFILES = $(shell find . -name '*.c')
 OFILES = $(CFILES:.c=.o)
 # GCCFILESFLAGS = -ffreestanding -mgeneral-regs-only
 INCLUDE = src/hal/
-GCCFLAGS = -Wall -O2 -I$(INCLUDE) -g -ffreestanding -nostdinc -nostdlib -nostartfiles -DDEBUG
+GCCFLAGS = -Wall -O2 -I$(INCLUDE) -g -ffreestanding -nostdinc -nostdlib -nostartfiles# -DDEBUG
 ARMGNU ?= aarch64-none-elf
 
 all: clean kernel8.img
