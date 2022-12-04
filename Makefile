@@ -35,7 +35,8 @@ kernel8.img: src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/s
 	$(ARMGNU)-ld -M -g -nostdlib src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o src/os/sysfc/sysa.o src/os/mm/mma.o $(OFILES) -T link.ld -o build/kernel8.elf > build/link.ld.out
 	$(ARMGNU)-objcopy --srec-forceS3 build/kernel8.elf -O srec build/kernel8.srec
 	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
-	$(ARMGNU)-objdump -l -S -D build/kernel8.elf > build/kernel8.dump
+	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
+	$(ARMGNU)-objdump -h -l -S -D build/kernel8.elf > build/kernel8.dump
 
 clean:
 	/bin/rm build/kernel8.elf *.o build/*.img build/*.srec > /dev/null 2> /dev/null || true

@@ -1,6 +1,6 @@
 MEMORY {
-    initsys_base : ORIGIN = 0x80000, LENGTH = 0x10000
-    kernel : ORIGIN = 0xFF000000, LENGTH = 0x1000000
+    initsys_base [(rwxal)] : ORIGIN = 0x80000, LENGTH = 0x10000
+    kernel (rwx) : ORIGIN = 0xFF000000, LENGTH = 0x1000000
 }
 
 SECTIONS
