@@ -27,7 +27,7 @@ uint32_t get_free_node_id() {
             return i;
         }
     }
-    DEBUG_F("Filesystem is full!");
+    print("Filesystem is full!");
     return 0;
 }
 

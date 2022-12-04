@@ -147,12 +147,10 @@ int strlen(const char* s) {
  * @param dest
  */
 void stradd2(char* src, char* dest) {
-//    int j = 0;
     for (int i = strlen(dest), j = 0; j < strlen(src); j++, i++) {
         dest[i] = src[j];
     }
 
-//    return dest;
 }
 
 /**
@@ -161,16 +159,6 @@ void stradd2(char* src, char* dest) {
  * @param target
  */
 void straddtostart(char *src, char * target) {
-
-    // /root/home/admin
-    // ""
-    // admin
-    // home
-    // root
-    // stradd2("", "admin") => /admin
-    //stradd2("admin", "home") => /home/admin
-    //stradd2("home/admin", "root") => root/home/admnin
-
     char tmp[1024] = {0};
     strncpy(tmp, src, strlen(src));
     stradd2(target, tmp);
@@ -216,11 +204,6 @@ uint32_t ** strsplit(uint8_t * src, uint8_t znak, uint32_t offset) {
             token_i++;
         }
     }
-
-//    for (uint32_t i = 0; i < 32; i++) {
-//        DEBUG_P("00 hex: %x", split[i]);
-//        DEBUG_P("00 string: %s", split[i]);
-//    }
 
     return &split;
 }
