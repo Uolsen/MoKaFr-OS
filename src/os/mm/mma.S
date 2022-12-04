@@ -1,3 +1,4 @@
+// .section ".initsys.start"
 .global memzero
 memzero:
 	str xzr, [x0], #8
