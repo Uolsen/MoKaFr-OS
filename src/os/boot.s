@@ -43,7 +43,7 @@ kernel_entry:  // We're on the main core!
 el1_entry:
     // Set stack to start below our code
     ldr     x1, =_start
-    mov     sp, #0x80000
+    mov     sp, x1
 
     bl     =main
 

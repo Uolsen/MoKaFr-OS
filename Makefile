@@ -2,7 +2,7 @@ CFILES = $(shell find . -name '*.c')
 OFILES = $(CFILES:.c=.o)
 # GCCFILESFLAGS = -ffreestanding -mgeneral-regs-only
 INCLUDE = src/hal/
-GCCFLAGS = -Wall -O2 -I$(INCLUDE) -ffreestanding -nostdinc -nostdlib -nostartfiles -DDEBUG
+GCCFLAGS = -Wall -O2 -I$(INCLUDE) -g -ffreestanding -nostdinc -nostdlib -nostartfiles -DDEBUG
 ARMGNU ?= aarch64-none-elf
 
 all: clean kernel8.img
@@ -31,8 +31,8 @@ src/os/liba.o: src/os/liba.s
 %.o: %.c
 	$(ARMGNU)-gcc $(GCCFLAGS) -c $< -o $@
 
-kernel8.img: src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o  src/os/sysfc/sysa.o src/os/mm/mma.o $(OFILES) firmware/BCM4345C0.o
-	$(ARMGNU)-ld -M -nostdlib src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o  src/os/sysfc/sysa.o src/os/mm/mma.o $(OFILES) firmware/BCM4345C0.o -T link.ld -o build/kernel8.elf > build/link.ld.out
+kernel8.img: src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o src/os/sysfc/sysa.o src/os/mm/mma.o $(OFILES) firmware/BCM4345C0.o
+	$(ARMGNU)-ld -M -g -nostdlib src/os/boot.o src/os/interrupt/entry.o src/os/liba.o src/os/sched/scheda.o src/os/sysfc/sysa.o src/os/mm/mma.o $(OFILES) -T link.ld -o build/kernel8.elf > build/link.ld.out
 	$(ARMGNU)-objcopy --srec-forceS3 build/kernel8.elf -O srec build/kernel8.srec
 	$(ARMGNU)-objcopy -O binary build/kernel8.elf build/kernel8.img
 	$(ARMGNU)-objdump -l -S -D build/kernel8.elf > build/kernel8.dump
