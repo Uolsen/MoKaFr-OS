@@ -42,7 +42,7 @@ typedef struct Pipe {
 } Pipe;
 
 uint32_t get_free_node_id();
-uint32_t fs_create_node();
+//uint32_t fs_create_node();
 uint8_t fs_check_name(Directory *directory, uint8_t *name);
 DirectoryEntry * fs_create_directory(Node parent, uint8_t* name);
 DirectoryEntry * fs_create_file(Node parent, uint8_t* name);
