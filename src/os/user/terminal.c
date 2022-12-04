@@ -89,6 +89,14 @@ void programms(char * input) {
         pwd();
     } else if (strncmp("touch", input, strlen("touch")) == 0) {
         touch(input);
+    } else if (strncmp("cat", input, strlen("cat")) == 0) {
+        cat(input);
+    } else if (strncmp("test", input, strlen("test")) == 0) {
+        DEBUG_P("GFX PIPE addr: %x", get_gfx_pipe());
+        fs_pread(get_gfx_pipe());
+        fs_fread(get_gfx_pipe(), 32);
+    } else if (strncmp("draw", input, strlen("draw")) == 0) {
+        draw(input);
     }
 }
 

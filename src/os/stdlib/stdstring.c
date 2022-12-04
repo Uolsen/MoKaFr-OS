@@ -142,6 +142,7 @@ char ** strsplit(char * src, char znak, int offset) {
     char token[32];
     uint32_t token_i = 0;
     uint32_t tokens_i = 0;
+
     for (uint32_t i = offset; i <= strlen(src); i++) {
         if (src[i] == znak || src[i] == '\0' || src[i] == '\n') {
             strncpy(split[tokens_i], token, strlen(token));
@@ -154,6 +155,11 @@ char ** strsplit(char * src, char znak, int offset) {
         }
     }
 
-    return split;
+//    for (uint32_t i = 0; i < 32; i++) {
+//        DEBUG_P("00 hex: %x", split[i]);
+//        DEBUG_P("00 string: %s", split[i]);
+//    }
+
+    return &split;
 }
 

@@ -38,21 +38,26 @@ void ls() {
 
 uint32_t cd(uint32_t current_node_id, char *input) {
     uint32_t original_node_id = current_node_id;
-    char **strings = strsplit(input, ' ', 0);
+    char *strings = strsplit(input, ' ', 0);
 
-    char *path;
-    strncpy(path, strings + (1 * 8 * 16), 16);
-    char **path_tokens = strsplit(path, '/', 0);
+    char path[1024] = {0};
+    //char * path;
+    strncpy(path, "", 1024);
+    char * split = get_split(strings, 1);
+    strncpy(path, split, strlen(split)-1);
+    char *path_tokens = strsplit(path, '/', 0);
 
     for (uint32_t i = 0; i < 32; i++) {
-        char *token;
-        strncpy(token, path_tokens + (i * 8 * 16), 16);
+        char token[32] = {0};
+        char *split_t = get_split(path_tokens, i);
+
+        strncpy(token, split_t, strlen(split_t));
         // ../ ../ home/ admin
-        DEBUG_P("%s", token);
 
         if (strlen(token) == 0) {
             continue;
         }
+        DEBUG_P("%s", token);
 
         Node node = fs_get_node(current_node_id);
         Directory *directory = fs_node_get_directory(node);
@@ -78,4 +83,48 @@ void pwd() {
     DEBUG_P("NODE ID %u", node.id);
     char *path = fs_get_path(node);
     printp("%s", path);
+}
+
+void cat(uint8_t *input) {
+    char *strings = strsplit(input, ' ', 0);
+
+    char name[32] = {0};
+    char *split = get_split(strings, 1);
+    strncpy(name, split, strlen(split));
+
+    DEBUG_P("Name: %s", name);
+//    DEBUG_P("Split: %s", split);
+
+    Node node = fs_get_node(get_current_node_id());
+    Directory *directory = fs_node_get_directory(node);
+
+    DirectoryEntry * entry = fs_get_directory_entry(directory, name);
+
+    Node fileNode = fs_get_node(entry->node_id);
+    File * file = fs_node_get_file(fileNode);
+    DEBUG_P("File Node: %u", fileNode.id);
+//    DEBUG_P("File W Pointer: %u", file->write_pointer);
+//    DEBUG_P("File R Pointer: %u", file->read_pointer);
+
+    DEBUG_P("Current Node ID: %u", node.id);
+    DEBUG_P("File Node ID: %u", fileNode.id);
+
+//    for (int i = 0; i < 1024; i++) {
+//        printp("%s", file->data[i]);
+//    }
+
+    char * text = fs_fread(entry, 1024);
+
+    DEBUG_P("Data: %s", text);
+
+}
+
+void draw(input) {
+    char *strings = strsplit(input, ' ', 0);
+    char data[1024] = {0};
+    char *split = get_split(strings, 1);
+    strncpy(data, split, strlen(split));
+    stradd(data, ";", 1);
+
+    fs_pwrite(get_gfx_pipe(), data, strlen(data));
 }

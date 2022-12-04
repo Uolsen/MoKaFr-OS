@@ -1,6 +1,8 @@
 #ifndef _STDSTRING_H
 #define _STDSTRING_H
 
+#include "intdef.h"
+
 typedef struct Token {
     char value[32];
 } Token;
@@ -14,6 +16,7 @@ int strncmp(const char *s1, const char *s2, int size);
 int strlen(const char* s);
 void straddtostart(char *src, char * target);
 void bzero(void* memory, int length);
-char ** strsplit(char * src, char znak, int offset);
+uint32_t ** strsplit(uint8_t * src, uint8_t znak, uint32_t offset);
+uint8_t * get_split(uint8_t * split, uint32_t index);
 
 #endif

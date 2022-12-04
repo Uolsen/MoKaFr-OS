@@ -8,7 +8,7 @@ void init_timer(void)
     DEBUG_F("ARM Timer INIT\n");
 
     mmio_write(ARM_TIMER_PREDIV, 0x7d);
-    mmio_write(ARM_TIMER_LOAD, 40000000);
+    mmio_write(ARM_TIMER_LOAD, 50000);
     mmio_write(ARM_TIMER_CONTROL, 0b10100010);
 }
 

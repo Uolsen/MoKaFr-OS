@@ -9,6 +9,7 @@
 #include "sched/sched.h"
 #include "filesystem/fat.h"
 #include "user/terminal.h"
+#include "user/gfx.h"
 #include "sysproc/sysinfo.h"
 #include "stdlib/stdstring.h"
 
@@ -48,6 +49,7 @@ void user_process(){
 
     register_process((unsigned long)&terminal_main);
     register_process((unsigned long)&sysinfo_main);
+    register_process((unsigned long)&gfx_main);
 //    register_process((unsigned long)mkdir);
 
 //    unsigned long stack = call_sys_malloc();
@@ -98,9 +100,11 @@ void main()
     fb_init();
     fs_init();
 
-//    char ** strings = strsplit(" dev home admin", ' ', 1);
-//    for (int i = 0; i < 5; i++) {
-//        DEBUG_P("string: %s", strings + (i * 8 * 16));
+    uint8_t * strings = strsplit("dev home admin", ' ', 0);
+//    DEBUG_P("main hex: %x", strings);
+
+//    for (uint32_t i = 0; i < 32; i++) {
+//        DEBUG_P("string: %s", get_split(strings, i));
 //    }
 
     Node root = fs_get_node(1);
@@ -157,6 +161,18 @@ void main()
     //     print("error while starting process 2");
     //     return;
     // }
+
+
+//    char buffer[1024];
+//    int run = 32;
+//    int index = 0;
+//    DEBUG_P("GFX PIPE: %x", get_gfx_pipe());
+//    while(run > 0) {
+//        run--;
+//        uint8_t character = fs_pread(get_gfx_pipe());
+//        buffer[index++] = character;
+//        DEBUG_P("Char: %c", character);
+//    }
 
     while (1){
         schedule();

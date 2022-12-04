@@ -13,9 +13,9 @@ void sysinfo_main()
 	{
 		ticks += 1;
 		#ifdef DEBUG
-			delay(100000000);
+			delay(10000);
 		#else
-			delay(100000);
+			delay(1000);
 		#endif
 		// DEBUG_P("TICKS: %u", ticks);
 	}
